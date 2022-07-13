@@ -1,0 +1,6 @@
+@import url("resources/core.css");
+
+.btn-warning{
+    /* Da se izmeni */
+    background-color: red;
+}
