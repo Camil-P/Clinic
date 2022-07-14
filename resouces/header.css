@@ -25,6 +25,7 @@ header{
     display: table;
     height: 100%;
     float: left;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .header-logo div{
@@ -48,6 +49,7 @@ header nav li{
     height: 100%;
     float: left;
     margin-right: 30px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 header nav li:last-of-type{
