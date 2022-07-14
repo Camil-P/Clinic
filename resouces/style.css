@@ -1,0 +1,11 @@
+@import url("core.css");
+
+/* header{
+    height: 100px;
+    background-color: aqua;
+} */
+
+.btn-warning{
+    /* Da se izmeni */
+    background-color: red;
+}
