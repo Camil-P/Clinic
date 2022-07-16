@@ -8,13 +8,13 @@
 header{
     background-color: aliceblue;
     width: 100vw;
-    height: 100px;
+    height: 110px;
     border-bottom: solid 1px rgba(16, 16, 16, 0.1);
     font-family: 'Poppins';
 }
 
 .header-wrapper{
-    width: 1300px; /* This is the inner width of the content inside of your header (80%, etc) */
+    width: 1300px;
     height: 100%;
    display: flex;
    justify-content: space-between;
@@ -34,10 +34,10 @@ header{
     vertical-align: middle;
 }
 
-/* .header-logo img{
+.header-logo img{
     height: 50px;
-    margin-top: 5px; /* Optical alignment of the logo */
- */
+    margin-top: 5px; 
+}
 
 header nav{
     float: right;
@@ -74,4 +74,28 @@ header nav .button{
 
 header nav .button:hover{
     filter: brightness(1.05);
+}
+
+@media only screen and (max-width: 600px) {
+
+    .header-wrapper{
+        width: 600px;
+        height: 100%;
+        display: table;
+        margin-left: 30px;
+    }
+
+    header nav{
+        font-size: 12px;
+        display: table-row;
+        margin-right: 60px;
+    }
+
+    /* .header-logo{
+        font-size: 14px;
+  } */
+    
+
+
+    
 }
