@@ -10,7 +10,7 @@ body {
   box-sizing: border-box;
 }
 
-footer .container {
+footer .footer-container {
   max-width: 1170px;
   /* background-color: red; */
   margin: auto;
@@ -18,7 +18,7 @@ footer .container {
 footer ul {
   list-style: none;
 }
-footer .row {
+footer .footer-row {
   display: flex;
   flex-wrap: wrap;
 }
@@ -76,7 +76,7 @@ footer .row {
   padding-left: 10px;
 }
 
-.footer-col .social-links a {
+.footer-col  .footer-social-links a {
   display: inline-block;
   height: 40px;
   width: 40px;
@@ -89,15 +89,15 @@ footer .row {
   transition: all 0.5s ease;
 }
 
-.footer-col .social-links a i {
+.footer-col .footer-social-links a i {
   margin-top: 10px;
 }
-.footer-col .social-links a:hover {
+.footer-col .footer-social-links a:hover {
   color: #24262b;
   background-color: #ffffff;
 }
 
-.footer-col .contact-us span {
+.footer-col .footer-contact-us span {
   color: #bbbbbb;
 }
 
