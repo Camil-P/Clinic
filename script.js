@@ -4,3 +4,4 @@ const navbarLinks = document.getElementsByClassName('header-navbar-links')[0]
 toggleButton.addEventListener('click', () => {
   navbarLinks.classList.toggle('active')
 })
+
