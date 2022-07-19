@@ -1,0 +1,23 @@
+body {
+    margin:  0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+form{ 
+    border: 3px solid #f1f1f1; 
+} 
+
+
+.container { 
+    padding: 25px; 
+    background-color: lightblue;
+    position: relative;
+    margin: 25px;
+} 
+
+#login {
+    width: 500px; 
+    height: 500px; 
+    margin: auto;
+}
