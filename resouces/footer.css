@@ -13,6 +13,7 @@ body {
 footer .footer-container {
   max-width: 1170px;
   /* background-color: red; */
+  text-align: center;
   margin: auto;
 }
 footer ul {
