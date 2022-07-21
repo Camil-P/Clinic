@@ -13,7 +13,7 @@ header {
     position: relative;
     justify-content: space-between;
     align-items: center;
-    background-color:#24262b;
+    background-color:#24262b;   
     border : 1px solid greenyellow;
 
 }
@@ -144,3 +144,4 @@ header {
         width: 100%;
     }
 }
+
