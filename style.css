@@ -1,5 +1,7 @@
-@import url("resouces/core.css");
-@import url("resouces/login.css");
+@import url("resources/core.css");
+@import url("resources/footer.css");
+@import url("resources/gallery/gallery.css");
+@import url("resources/header/header.css");
 
 body{
     margin: 0;
