@@ -1,7 +1,11 @@
 @import url("resouces/core.css");
 @import url("resouces/login.css");
 
+body{
+    margin: 0;
+}
+
 .btn-warning{
     /* Da se izmeni */
     background-color: red;
-}
+}   
