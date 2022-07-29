@@ -8,8 +8,6 @@ body{
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
+    
 }
-.btn-warning{
-    /* Da se izmeni */
-    background-color: red;
-}   
+
