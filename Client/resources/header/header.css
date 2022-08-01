@@ -13,9 +13,11 @@ header {
     position: relative;
     justify-content: space-between;
     align-items: center;
-    background-color:#24262b;   
-    border : 1px solid greenyellow;
+    background-color:#24262b; 
 
+    border-color: greenyellow;
+    border-width: 1px 0px 1px 0px;
+    border-style: solid ;
 }
 
 .header-logo img {

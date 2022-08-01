@@ -58,6 +58,12 @@ button a {
   padding: 20px;
 }
 
+section {
+  border-color: greenyellow;
+    border-width: 1px 0px 1px 0px;
+    border-style: solid ;
+    border-collapse: collapse;
+}
 /* button { 
     background-color: #4CAF50; 
     width: 100%;
