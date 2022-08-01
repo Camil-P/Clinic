@@ -98,14 +98,14 @@ footer ul {
 
 /* responsive for footer */
 
-@media (max-width: 767px) {
+@media (max-width: 1606px) {
   .footer-col {
     width: 50%;
     margin-bottom: 30px;
   }
 }
 
-@media (max-width: 574px) {
+@media (max-width: 1062px) {
   .footer-col {
     width: 100%;
   }
