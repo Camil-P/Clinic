@@ -41,8 +41,9 @@
 }
 
 .row-services {
+    padding: 20px;
     display: flex;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     gap: 20px;
     justify-content: center;
     /* flex-direction: column; */
@@ -102,5 +103,13 @@
 @media (max-width: 1071px) {
     .container-services {
       height: 130vh;
+      display: wrap;
+    }
+  }
+
+  @media (max-width: 1071px) {
+    .row-services {
+      
+     flex-wrap: wrap;
     }
   }
