@@ -9,7 +9,10 @@ footer{
     margin: auto;
     display: flex;
     flex-wrap: wrap;
-    border: 1px solid greenyellow;
+    border-color: greenyellow;
+    border-width: 0px 0px 1px 0px;
+    border-style: solid ;
+    border-collapse: collapse;
     background-color: #24262b;
     padding: 70px;
 }
