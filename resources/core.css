@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,700;1,600&display=swap");
 @import url("footer.css");
 @import url("header.css");
+@import url("services.css");
 
 input[type="text"],
 select,
@@ -16,6 +17,15 @@ input[type="password"] {
   border-radius: 4px;
   box-sizing: border-box;
 }
+
+label{
+  color: white;
+}
+
+a{
+  color: #4caf50;
+}
+
 
 input[type="submit"] {
   width: 100%;
@@ -33,6 +43,10 @@ input[list="countrt"]:hover{
   background-color: #45a049;
 }
 
+
+button a {
+  text-decoration: none;
+}
 
 
 .form-container {

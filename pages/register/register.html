@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<title>Validacija Forme</title>
 	<link rel="stylesheet" type="text/css" href="register.css">
 	<link rel="stylesheet" type="text/css" href="../../style.css">
 </head>
+
 <body class="register-body">
 
-    <div class="form-container">
-		<center><h1 class="title-register">Register</h1></center>
-		
+	<div class="form-container">
+		<center>
+			<h1 class="title-register">Register</h1>
+		</center>
+
 		<form>
 			<h1>Registracija korisnika</h1>
 			<label for="ime_prezime">Ime i prezime:</label>
@@ -31,30 +35,30 @@
 			<input list="country" name="country" class="datalist-input" />
 			<datalist id="country">
 				<option value="Srbija" />
-				<option value="Hrvatska"/>
+				<option value="Hrvatska" />
 				<option value="Crna Gora" />
 				<option value="Bosna i Hercegovina" />
 				<option value="Albanija" />
 			</datalist>
-			
+
 			<label for="number_phone">Broj telefona:</label>
 			<input id="number_phone" type="text" name="number_phone" placeholder="+38#####">
-				
-							<label for="country">Odaberi pol</label>
-							<input list="sex" name="sex" class="datalist-input" />
-							<datalist id="sex">
-								<option value="Musko" />
-								<option value="Zensko"/>
-								
-							</datalist>
 
-		
-			
-			<input type="submit"></button>
+			<label for="country">Odaberi pol</label>
+			<input list="sex" name="sex" class="datalist-input" />
+			<datalist id="sex">
+				<option value="Musko" />
+				<option value="Zensko" />
+
+			</datalist>
+
+			<input type="submit" value="REGISTER"></button>
+			<a href="../login/login.html"> Already have an account? </a>
 		</form>
 	</div>
 
 
 	<script src="register.js"></script>
 </body>
+
 </html>
