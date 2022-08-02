@@ -6,8 +6,6 @@
 }
 
 .container-services {
-    border: 1px solid greenyellow;
-
     width: 100%;
     height: 100vh;
     background-color: #24262b;
@@ -43,8 +41,9 @@
 }
 
 .row-services {
+    padding: 20px;
     display: flex;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     gap: 20px;
     justify-content: center;
     /* flex-direction: column; */
@@ -101,8 +100,16 @@
     /* color: #fff; */
 }
 
-@media (max-width: 931px) {
+@media (max-width: 1071px) {
     .container-services {
       height: 130vh;
+      display: wrap;
+    }
+  }
+
+  @media (max-width: 1071px) {
+    .row-services {
+      
+     flex-wrap: wrap;
     }
   }

@@ -55,14 +55,21 @@ img {
 	}
 }
 
+@media screen and (max-width: 800px){
+	.div-span{
+		display: none;
+	}
+}
+
 /* The dots/bullets/indicators */
 .dot {
+	
 	cursor: pointer;
 	height: 15px;
-	width: 15px;
-	margin: 0 2px;
+	width: 15px !important;
+	margin: 0 2px ;
 	background-color: greenyellow;
-  overflow: hidden;
+  	overflow: hidden;
 	border-radius: 50%;
 	display: inline-block;
 	transition: background-color 0.6s ease;
