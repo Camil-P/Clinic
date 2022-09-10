@@ -3,6 +3,7 @@
 require_once("../config/Database.php");
 require_once("../models/Appointment.php");
 require_once("../models/Response.php");
+require_once("../dtos/CreateAppointment.php");
 
 try {
     $writeDB = DB::connectWriteDB();
@@ -16,7 +17,7 @@ try {
     exit();
 }
 
-// Handle Get all Appointments by doctorId/patientId/servieName Request 
+// Handle Get all Appointments by doctorId/patientId Request 
 if (
     array_key_exists("patientId", $_GET)
     && array_key_exists("doctorId", $_GET)
@@ -35,17 +36,17 @@ if (
     }
     try {
         $query = $readDB->prepare('SELECT
-                                                Id,
-                                                ServiceName,
-                                                CompletionStatus,
-                                                Date,
-                                                StartingHour,
-                                                PatientId,
-                                                DoctorId
-                                            FROM appointment
-                                            WHERE 
-                                                DoctorId = :doctorId
-                                                OR PatientId = :patientId');
+                                    Id,
+                                    ServiceName,
+                                    CompletionStatus,
+                                    Date,
+                                    StartingHour,
+                                    PatientId,
+                                    DoctorId
+                                FROM appointment
+                                WHERE 
+                                    DoctorId = :doctorId
+                                    OR PatientId = :patientId;');
 
         $query->bindParam(':doctorId', $doctorId, PDO::PARAM_INT);
         $query->bindParam(':patientId', $patientId, PDO::PARAM_INT);
@@ -191,9 +192,9 @@ elseif (array_key_exists('appointmentId', $_GET)) {
 
 // Create appointment
 elseif (empty($_GET)) {
-    if ($_SERVER['REQUEST_METHOD' === 'POST']) {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-        if ($_SERVER['CONTENT_TYPE'] === 'application/json') {
+        if ($_SERVER['CONTENT_TYPE'] !== 'application/json') {
             $response = new Response(false, 400);
             $response->addMessage("Content type header is not set to JSON");
             $response->send();
@@ -210,6 +211,72 @@ elseif (empty($_GET)) {
                 $response->send();
                 exit();
             }
+
+            $createAppointment = new CreateAppointment($writeDB, $jsonData->serviceName, $jsonData->date, $jsonData->startingHour, $jsonData->patientId, $jsonData->doctorId);
+
+            $query = $writeDB->prepare("INSERT INTO appointment 
+                                            (ServiceName, 
+                                            CompletionStatus, 
+                                            Date, 
+                                            StartingHour, 
+                                            PatientId, 
+                                            DoctorId) 
+                                        values 
+                                            (:serviceName, 
+                                            :completionStatus,
+                                            :date,
+                                            :startingHour,
+                                            :patientId,
+                                            :doctorId);");
+            $serviceName = $createAppointment->getServiceName();
+            $query->bindParam(':serviceName', $serviceName, PDO::PARAM_STR);
+            $completionStatus = $createAppointment->getCompletionStatus();
+            $query->bindParam(':completionStatus', $completionStatus, PDO::PARAM_BOOL);
+            $date = $createAppointment->getDate();
+            $query->bindParam(':date', $date, PDO::PARAM_STR);
+            $startingHour = $createAppointment->getStartingHour();
+            $query->bindParam(':startingHour', $startingHour, PDO::PARAM_INT);
+            $patientId = $createAppointment->getPatientId();
+            $query->bindParam(':patientId', $patientId, PDO::PARAM_INT);
+            $doctorId = $createAppointment->getDoctorID();
+            $query->bindParam(':doctorId', $doctorId, PDO::PARAM_INT);
+            $query->execute();
+
+            $rowCount = $query->rowCount();
+            if ($rowCount === 0) {
+                $response = new Response(false, 500);
+                $response->addMessage("Appointment was not created.");
+                $response->send();
+                exit();
+            }
+
+            $lastAppointmentCreated = $writeDB->lastInsertId();
+
+            $query = $writeDB->prepare("SELECT *
+                                        FROM appointment
+                                        WHERE Id = :appointmentId;");
+            $query->bindParam(':appointmentId', $lastAppointmentCreated, PDO::PARAM_INT);
+            $query->execute();
+
+            $rowCount = $query->rowCount();
+            if ($rowCount === 0) {
+                $response = new Response(false, 500);
+                $response->addMessage("Failed to retrieve appointment after creation.");
+                $response->send();
+                exit();
+            }
+
+            while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+                $appointment = new Appointment($row['Id'], $row["ServiceName"], $row['Date'], $row['StartingHour'], $row['PatientId'], $row['DoctorId']);
+                $appointmentArray = $appointment->asArray();
+            }
+
+            $response = new Response(true, 201);
+            $response->toCache(true);
+            $response->addMessage("Successfully created Appointment");
+            $response->setData($appointmentArray);
+            $response->send();
+            exit();
         } catch (AppointmentException $ex) {
             $response = new Response(false, 400);
             $response->addMessage($ex->getMessage());
@@ -217,7 +284,7 @@ elseif (empty($_GET)) {
             exit();
         } catch (PDOException $ex) {
             $response = new Response(false, 500);
-            $response->addMessage("Unable to create appointments in DB with given data.");
+            $response->addMessage("There was a problem with creating a task in DB: " . $ex->getMessage());
             $response->send();
 
             error_log("DB error: " . $ex->getMessage(), 0);
