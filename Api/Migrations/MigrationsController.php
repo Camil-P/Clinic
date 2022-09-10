@@ -5,6 +5,7 @@ require_once('../models/Response.php');
 
 require_once('CM00001.php');
 require_once('CM00002.php');
+require_once('CM00003.php');
 
 if ($_GET['username'] === 'clinic' && $_GET['password'] === 'clinic') {
 
@@ -21,6 +22,14 @@ if ($_GET['username'] === 'clinic' && $_GET['password'] === 'clinic') {
 
         $stmt = $readDB->prepare($CM00002);
         $response->addMessage($descriptionCM00002);
+        $stmt->execute();
+
+        $stmt = $readDB->prepare($CM00003);
+        $response->addMessage($descriptionCM00003);
+        $stmt->execute();
+
+        $stmt = $readDB->prepare($CM00004);
+        $response->addMessage($descriptionCM00004);
         $stmt->execute();
 
 
