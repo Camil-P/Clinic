@@ -103,7 +103,7 @@ class Appointment
         } elseif (date("Y-m-d") < $this->_date) {
             $this->_completionStatus = false;
         } else {
-            if (date("h") >= $this->_startingHour) {
+            if (date("H") >= $this->_startingHour) {
                 $this->_completionStatus = true;
             } else {
                 $this->_completionStatus = false;
