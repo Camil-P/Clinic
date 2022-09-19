@@ -6,8 +6,6 @@ class UserException extends Exception
 
 class User
 {
-  // private $_conn;
-  // private $_table = 'user';
 
   private $_id;
   private $_name;

@@ -3,7 +3,7 @@
 require_once("../config/Database.php");
 require_once("../models/Appointment.php");
 require_once("../models/Response.php");
-require_once("../dtos/CreateAppointment.php");
+require_once("../requestModels/CreateAppointment.php");
 
 try {
     $writeDB = DB::connectWriteDB();
@@ -38,7 +38,6 @@ if (
         $query = $readDB->prepare('SELECT
                                     Id,
                                     ServiceName,
-                                    CompletionStatus,
                                     Date,
                                     StartingHour,
                                     PatientId,
@@ -102,7 +101,6 @@ elseif (array_key_exists('appointmentId', $_GET)) {
                 $query = $readDB->prepare('SELECT
                                                 Id,
                                                 ServiceName,
-                                                CompletionStatus,
                                                 Date,
                                                 StartingHour,
                                                 PatientId,
@@ -216,22 +214,18 @@ elseif (empty($_GET)) {
 
             $query = $writeDB->prepare("INSERT INTO appointment 
                                             (ServiceName, 
-                                            CompletionStatus, 
                                             Date, 
                                             StartingHour, 
                                             PatientId, 
                                             DoctorId) 
                                         values 
-                                            (:serviceName, 
-                                            :completionStatus,
+                                            (:serviceName,
                                             :date,
                                             :startingHour,
                                             :patientId,
                                             :doctorId);");
             $serviceName = $createAppointment->getServiceName();
             $query->bindParam(':serviceName', $serviceName, PDO::PARAM_STR);
-            $completionStatus = $createAppointment->getCompletionStatus();
-            $query->bindParam(':completionStatus', $completionStatus, PDO::PARAM_BOOL);
             $date = $createAppointment->getDate();
             $query->bindParam(':date', $date, PDO::PARAM_STR);
             $startingHour = $createAppointment->getStartingHour();

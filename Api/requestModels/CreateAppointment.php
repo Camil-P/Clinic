@@ -5,7 +5,6 @@ include_once("../models/Appointment.php");
 class CreateAppointment
 {
     private $_serviceName;
-    private $_completionStatus;
     private $_date;
     private $_startingHour;
     private $_patientId;
@@ -18,7 +17,6 @@ class CreateAppointment
         $this->setStartingHour($startingHour);
         $this->setPatientId($patientId);
         $this->setDoctorId($doctorId);
-        $this->setCompletionStatus();
         if ($this->appointmentAlreadyExists($writeDB, $this->getDate(), $this->getStartingHour(), $this->getPatientId(), $this->getDoctorID())) {
             throw new AppointmentException("User or doctor already has an appointment for the given time.");
         }
@@ -45,40 +43,10 @@ class CreateAppointment
             return true;
         } catch (PDOException $ex) {
             $response = new Response(false, 500);
-            $response->addMessage("Appointment was not created. " . $ex->getMessage());
+            $response->addMessage("Unable to check if appointment already exists. " . $ex->getMessage());
             $response->send();
             exit();
         }
-    }
-
-    public function getServiceName()
-    {
-        return $this->_serviceName;
-    }
-
-    public function getCompletionStatus()
-    {
-        return $this->_completionStatus;
-    }
-
-    public function getDate()
-    {
-        return $this->_date;
-    }
-
-    public function getStartingHour()
-    {
-        return $this->_startingHour;
-    }
-
-    public function getPatientId()
-    {
-        return $this->_patientId;
-    }
-
-    public function getDoctorID()
-    {
-        return $this->_doctorId;
     }
 
     // SETTERS WITH VALIDATION
@@ -90,11 +58,6 @@ class CreateAppointment
         }
 
         $this->_serviceName = $serviceName;
-    }
-
-    public function setCompletionStatus()
-    {
-        $this->_completionStatus = false;
     }
 
     public function setDate($date)
@@ -169,5 +132,32 @@ class CreateAppointment
         }
 
         $this->_doctorId = $doctorId;
+    }
+
+    // GETTERS
+
+    public function getServiceName()
+    {
+        return $this->_serviceName;
+    }
+
+    public function getDate()
+    {
+        return $this->_date;
+    }
+
+    public function getStartingHour()
+    {
+        return $this->_startingHour;
+    }
+
+    public function getPatientId()
+    {
+        return $this->_patientId;
+    }
+
+    public function getDoctorID()
+    {
+        return $this->_doctorId;
     }
 }

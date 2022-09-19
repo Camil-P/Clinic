@@ -16,6 +16,5 @@ $CM00003 = "CREATE TABLE `user` (
                 `Password` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
                 `Disabled` boolean NOT NULL default 0,
                 `LoginAttempts` int(1) NOT NULL default 0,
-                `Admin` boolean NOT NULL default 0,
                 PRIMARY KEY (Id)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
