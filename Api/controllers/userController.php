@@ -53,15 +53,80 @@ try {
                                  $jsonData->jmbg,
                                  $jsonData->phoneNumber,
                                  $jsonData->email,
-                                 $jsonData->password);
+                                 $jsonData->password,
+                                '');
 
+     $query = $writeDB->prepare("INSERT INTO user 
+                                    (name, 
+                                    surname,
+                                    gender,
+                                    birthPlace,
+                                    birthDate,
+                                    jmbg,
+                                    phoneNumber,
+                                    email,
+                                    password,
+                                    role) 
+                                values (
+                                    '{$createUser->getName()}',
+                                    '{$createUser->getSurname()}',
+                                    '{$createUser->getGender()}',
+                                    '{$createUser->getBirthPlace()}',
+                                    '{$createUser->getBirthDate()}',
+                                    '{$createUser->getJmbg()}',
+                                    '{$createUser->getPhoneNumber()}',
+                                    '{$createUser->getEmail()}',
+                                    '{$createUser->getPassword()}',
+                                    '{$createUser->getRole()}');");
+    $query->execute();
     
+    $rowCount = $query->rowCount();
+    if ($rowCount === 0){
+        $response = new Response(false, 500);
+        $response->addMessage("User was not created.");
+        $response->send();
+        exit();
+    }
 
+    $lastUserId = $writeDB->lastInsertId();
+
+    $query = $writeDB->prepare("INSERT INTO patient 
+                                    (UserId) 
+                                values ($lastUserId);");
+    $query->execute();
+
+    $rowCount = $query->rowCount();
+    if ($rowCount === 0){
+        $query = $writeDB->prepare("DELETE FROM user 
+                                    WHERE $lastUserId;");
+        $query->execute();
+
+        $response = new Response(false, 500);
+        $response->addMessage("Patient was not created.");
+        $response->send();
+        exit();
+    }
+
+    $responseData = $createUser->asArray();
+    $responseData['id'] = $lastUserId;
+    
+    $response = new Response(true, 201);
+    $response->addMessage('User created.');
+    $response->setData($responseData);
+    $response->send();
+    exit();
     
 } catch (UserException $ex) {
     $response = new Response(false, 400);
     $response->addMessage($ex->getMessage());
     $response->send();
+    exit();
+} catch (PDOException $ex) {
+    $response = new Response(false, 500);
+    $response->addMessage("There was a problem with creating a user in DB: \n" . $ex->getMessage());
+    $response->send();
+
+    error_log("DB error: " . $ex->getMessage(), 0);
     exit();
 }
 

@@ -15,7 +15,7 @@ class CreateUser
     private $_password;
     private $_role;
 
-    public function __constract($writeDB, $name, $surname, $gender, $birthPlace, $birthDate, $jmbg, $phoneNumber, $email, $password, $role)
+    public function __construct($writeDB, $name, $surname, $gender, $birthPlace, $birthDate, $jmbg, $phoneNumber, $email, $password, $role)
     {
         $this->setName($name);
         $this->setSurname($surname);
@@ -39,7 +39,7 @@ class CreateUser
         try {
             $query = $writeDB->prepare("SELECT *
                                         FROM user
-                                        WHERE Email = $email OR JMBG = $jmbg;");
+                                        WHERE Email = '$email' OR JMBG = '$jmbg';");
             $query->execute();
 
             $rowCount = $query->rowCount();
@@ -66,7 +66,7 @@ class CreateUser
         $user['jmbg'] = $this->getJmbg();
         $user['phoneNumber'] = $this->getPhoneNumber();
         $user['email'] = $this->getEmail();
-        $user['password'] = $this->getPassword();
+        // $user['password'] = $this->getPassword();
         $user['role'] = $this->getRole();
 
         return $user;
@@ -146,7 +146,7 @@ class CreateUser
 
     public function setEmail($email)
     {
-        if (!isset($email) || strlen($email) < 0 || strlen($email) > 25) {
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL) || !isset($email) || strlen($email) < 0 || strlen($email) > 25) {
             throw new UserException("User - Email is not valid.");
         }
 
@@ -155,16 +155,27 @@ class CreateUser
 
     public function setPassword($password)
     {
-        if (!isset($password) || strlen($password) < 0 || strlen($password) > 16) {
-            throw new UserException("User - Password is not valid.");
+        if (!isset($password)){
+            throw new UserException("User - Password is not set.");
         }
 
-        $this->_password = trim($password);
+        if (strlen($password) < 6) {
+            throw new UserException("User - Password must be at least 6 character long.");
+        }
+
+        if (strlen($password) > 16){
+            throw new UserException("User - Password is can't be longer then 16 characters.");
+        }
+
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        
+
+        $this->_password = $hashedPassword;
     }
 
     public function setRole($writeDB, $role)
     {
-        if (isset($role)) {
+        if (!empty($role)) {
             $this->_role = $role;
         } else {
             $this->_role = $this->isFristUser($writeDB) ? "Admin" : "Patient";
