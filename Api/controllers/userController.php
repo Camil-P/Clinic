@@ -90,21 +90,23 @@ try {
 
     $lastUserId = $writeDB->lastInsertId();
 
-    $query = $writeDB->prepare("INSERT INTO patient 
-                                    (UserId) 
-                                values ($lastUserId);");
-    $query->execute();
-
-    $rowCount = $query->rowCount();
-    if ($rowCount === 0){
-        $query = $writeDB->prepare("DELETE FROM user 
-                                    WHERE $lastUserId;");
+    if ($createUser->getRole() === 'Patient'){
+        $query = $writeDB->prepare("INSERT INTO patient 
+                                        (UserId) 
+                                    values ($lastUserId);");
         $query->execute();
 
-        $response = new Response(false, 500);
-        $response->addMessage("Patient was not created.");
-        $response->send();
-        exit();
+        $rowCount = $query->rowCount();
+        if ($rowCount === 0){
+            $query = $writeDB->prepare("DELETE FROM user 
+                                        WHERE $lastUserId;");
+            $query->execute();
+    
+            $response = new Response(false, 500);
+            $response->addMessage("Patient was not created.");
+            $response->send();
+            exit();
+        }
     }
 
     $responseData = $createUser->asArray();

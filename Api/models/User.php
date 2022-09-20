@@ -1,5 +1,8 @@
 <?php
 
+// pass za camila = camil123
+// pass za dzela = dzelal123
+
 class UserException extends Exception
 {
 };
