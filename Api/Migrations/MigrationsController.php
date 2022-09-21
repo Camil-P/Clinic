@@ -32,6 +32,9 @@ if ($_GET['username'] === 'clinic' && $_GET['password'] === 'clinic') {
         $response->addMessage($descriptionCM00004);
         $stmt->execute();
 
+        $stmt = $readDB->prepare($CM00005);
+        $response->addMessage($descriptionCM00005);
+        $stmt->execute();
 
         // Send response the migrations are valid
         $response->send();
