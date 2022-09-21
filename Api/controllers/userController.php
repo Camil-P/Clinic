@@ -113,7 +113,7 @@ try {
     $responseData['id'] = $lastUserId;
     
     $response = new Response(true, 201);
-    $response->addMessage('User created.');
+    $response->addMessage('User successfully created.');
     $response->setData($responseData);
     $response->send();
     exit();

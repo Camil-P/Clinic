@@ -21,8 +21,9 @@ class User
   private $_email;
   private $_role;
   private $_password;
+  private $_disabled;
 
-  public function __constract($id, $name, $surname, $gender, $birthPlace, $birthDate, $jmbg, $phoneNumber, $email, $role, $password)
+  public function __constract($id, $name, $surname, $gender, $birthPlace, $birthDate, $jmbg, $phoneNumber, $email, $role, $password, $disabled)
   {
     $this->setId($id);
     $this->setName($name);
@@ -35,6 +36,7 @@ class User
     $this->setEmail($email);
     $this->setRole($role);
     $this->setPassword($password);
+    $this->setDisabled($disabled);
   }
 
   public function asArray()
@@ -163,6 +165,14 @@ class User
     $this->_password = $password;
   }
 
+  public function setDisabled($disabled){
+    if (!is_bool($disabled)){
+      throw new UserException("User - Disabled must be boolean value.");
+    }
+
+    $this->_disabled = $disabled;
+  }
+
   // GETTERS 
 
   public function getId()
@@ -218,5 +228,10 @@ class User
   public function getPassword()
   {
     return $this->_password;
+  }
+
+  public function getDisabled()
+  {
+    return $this->_disabled;
   }
 }
