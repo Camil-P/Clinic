@@ -36,6 +36,10 @@ if ($_GET['username'] === 'clinic' && $_GET['password'] === 'clinic') {
         $response->addMessage($descriptionCM00005);
         $stmt->execute();
 
+        $stmt = $readDB->prepare($CM00006);
+        $response->addMessage($descriptionCM00006);
+        $stmt->execute();
+
         // Send response the migrations are valid
         $response->send();
     } catch (PDOException $ex) {
