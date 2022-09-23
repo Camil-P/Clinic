@@ -1,23 +1,29 @@
 <?php
 
-    class Database{
-        private $host = 'localhost';
-        private $db_name = 'clinic';
-        private $username = 'root';
-        private $password = '';
-        private $conn;
+class DB
+{
+    private static $writeDBConnection;
+    private static $readDBConnection;
 
-        public function connect() {
-            $this->conn = null;
-
-            try{
-                $this->conn = new PDO('mysql:host=' . $this->host . ';dbname= ' . $this->db_name, $this->username, $this->password);
-                $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION)
-            }
-            catch(PDOException $e){
-                echo 'Connection Error: ' .$e->getMessage();
-            }
-
-            return $this->conn;
+    public static function connectWriteDB()
+    {
+        if (self::$writeDBConnection === null) {
+            self::$writeDBConnection = new PDO('mysql:host=localhost;dbname=clinic;utf8', 'root', 'root');
+            self::$writeDBConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            self::$writeDBConnection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
         }
+
+        return self::$writeDBConnection;
     }
+
+    public static function connectReadDB()
+    {
+        if (self::$readDBConnection === null) {
+            self::$readDBConnection = new PDO('mysql:host=localhost;dbname=clinic;utf8', 'root', 'root');
+            self::$readDBConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            self::$readDBConnection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        }
+
+        return self::$readDBConnection;
+    }
+}
