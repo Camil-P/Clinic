@@ -40,6 +40,14 @@ if ($_GET['username'] === 'clinic' && $_GET['password'] === 'clinic') {
         $response->addMessage($descriptionCM00006);
         $stmt->execute();
 
+        $stmt = $readDB->prepare($CM00007);
+        $response->addMessage($descriptionCM00007);
+        $stmt->execute();
+
+        $stmt = $readDB->prepare($CM00008);
+        $response->addMessage($descriptionCM00008);
+        $stmt->execute();
+
         // Send response the migrations are valid
         $response->send();
     } catch (PDOException $ex) {
