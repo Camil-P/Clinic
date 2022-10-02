@@ -11,7 +11,6 @@ $CM00001 = "CREATE TABLE `appointment` (
     `StartingMin` int(11) NOT NULL,
     `PatientId` int(11) NOT NULL,
     `DoctorId` int(11) NOT NULL,
-    `DoctorId` int(11) NOT NULL,
     `Role` enum('Admin','Doctor','Patient') NOT NULL DEFAULT 'Patient',
     PRIMARY KEY (Id)
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
