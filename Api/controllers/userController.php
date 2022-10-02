@@ -44,19 +44,9 @@ if (!$jsonData = json_decode(file_get_contents('php://input'))) {
 }
 
 try {
-    $createUser = new CreateUser($writeDB,
-                                 $jsonData->name,
-                                 $jsonData->surname,
-                                 $jsonData->gender,
-                                 $jsonData->birthPlace,
-                                 $jsonData->birthDate,
-                                 $jsonData->jmbg,
-                                 $jsonData->phoneNumber,
-                                 $jsonData->email,
-                                 $jsonData->password,
-                                '');
+    $createUser = new CreateUser($writeDB, $jsonData, '');
 
-     $query = $writeDB->prepare("INSERT INTO user 
+    $query = $writeDB->prepare("INSERT INTO user 
                                     (name, 
                                     surname,
                                     gender,
