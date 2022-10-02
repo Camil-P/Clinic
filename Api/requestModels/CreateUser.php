@@ -15,17 +15,53 @@ class CreateUser
     private $_password;
     private $_role;
 
-    public function __construct($writeDB, $name, $surname, $gender, $birthPlace, $birthDate, $jmbg, $phoneNumber, $email, $password, $role)
+    public function __construct($writeDB, $reqBody, $role)
     {
-        $this->setName($name);
-        $this->setSurname($surname);
-        $this->setGender($gender);
-        $this->setBirthPlace($birthPlace);
-        $this->setBirthDate($birthDate);
-        $this->setJMBG($jmbg);
-        $this->setPhoneNumber($phoneNumber);
-        $this->setEmail($email);
-        $this->setPassword($password);
+        if (!isset($reqBody->name)){
+            throw new UserException("User - name is not set.");
+        }
+        $this->setName($reqBody->name);
+
+        if (!isset($reqBody->surname)){
+            throw new UserException("User - surname is not set.");
+        }
+        $this->setSurname($reqBody->surname);
+        
+        if (!isset($reqBody->gender)){
+            throw new UserException("User - gender is not set.");
+        }
+        $this->setGender($reqBody->gender);
+
+        if (!isset($reqBody->birthPlace)){
+            throw new UserException("User - birthPlace is not set.");
+        }
+        $this->setBirthPlace($reqBody->birthPlace);
+        
+        if (!isset($reqBody->birthDate)){
+            throw new UserException("User - birthDate is not set.");
+        }
+        $this->setBirthDate($reqBody->birthDate);
+        
+        if (!isset($reqBody->jmbg)){
+            throw new UserException("User - jmbg is not set.");
+        }
+        $this->setJMBG($reqBody->jmbg);
+
+        
+        if (!isset($reqBody->phoneNumber)){
+            throw new UserException("User - phoneNumber is not set.");
+        }
+        $this->setPhoneNumber($reqBody->phoneNumber);
+        
+        if (!isset($reqBody->email)){
+            throw new UserException("User - email is not set.");
+        }
+        $this->setEmail($reqBody->email);
+        
+        if (!isset($reqBody->password)){
+            throw new UserException("User - password is not set.");
+        }
+        $this->setPassword($reqBody->password);
 
         if ($this->userAlreadyExists($writeDB, $this->getEmail(), $this->getJmbg())) {
             throw new UserException("User or doctor already created for the given email or JMBG.");
@@ -54,7 +90,7 @@ class CreateUser
             exit();
         }
     }
-    
+
     public function asArray()
     {
         $user = array();
@@ -76,7 +112,7 @@ class CreateUser
 
     public function setName($name)
     {
-        if (!isset($name) || strlen($name) < 0 || strlen($name) > 25) {
+        if (strlen($name) < 0 || strlen($name) > 25) {
             throw new UserException("User - Name is not valid.");
         }
 
@@ -85,7 +121,7 @@ class CreateUser
 
     public function setSurname($surname)
     {
-        if (!isset($surname) || strlen($surname) < 0 || strlen($surname) > 25) {
+        if (strlen($surname) < 0 || strlen($surname) > 25) {
             throw new UserException("User - Surame is not valid.");
         }
 
@@ -104,7 +140,7 @@ class CreateUser
 
     public function setBirthPlace($birthPlace)
     {
-        if (!isset($birthPlace) || strlen($birthPlace) < 0 || strlen($birthPlace) > 25) {
+        if (strlen($birthPlace) < 0 || strlen($birthPlace) > 25) {
             throw new UserException("User - Brth Place is not valid");
         }
 
@@ -113,7 +149,7 @@ class CreateUser
 
     public function setBirthDate($birthDate)
     {
-        if (!isset($birthDate) || !(bool)strtotime($birthDate)) {
+        if (!(bool)strtotime($birthDate)) {
             throw new UserException("User - Date is not date value");
         }
 
@@ -128,7 +164,7 @@ class CreateUser
 
     public function setJMBG($jmbg)
     {
-        if (!isset($jmbg) || strlen($jmbg) < 0 || strlen($jmbg) > 15) {
+        if (strlen($jmbg) < 0 || strlen($jmbg) > 15) {
             throw new UserException("User - JMBG is not valid.");
         }
 
@@ -137,7 +173,7 @@ class CreateUser
 
     public function setPhoneNumber($phoneNumber)
     {
-        if (!isset($phoneNumber) || strlen($phoneNumber) < 0 || strlen($phoneNumber) > 15) {
+        if (strlen($phoneNumber) < 0 || strlen($phoneNumber) > 15) {
             throw new UserException("User - Phone Number is not valid.");
         }
 
@@ -155,20 +191,16 @@ class CreateUser
 
     public function setPassword($password)
     {
-        if (!isset($password)){
-            throw new UserException("User - Password is not set.");
-        }
-
         if (strlen($password) < 6) {
             throw new UserException("User - Password must be at least 6 character long.");
         }
 
-        if (strlen($password) > 16){
+        if (strlen($password) > 16) {
             throw new UserException("User - Password is can't be longer then 16 characters.");
         }
 
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        
+
 
         $this->_password = $hashedPassword;
     }
@@ -181,7 +213,7 @@ class CreateUser
             $this->_role = $this->isFristUser($writeDB) ? "Admin" : "Patient";
         }
     }
-    
+
     private function isFristUser($writeDB)
     {
         try {
