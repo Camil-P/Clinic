@@ -25,19 +25,19 @@ if ($_GET['username'] === 'clinic' && $_GET['password'] === 'clinic') {
         exit();
     }
 
+    $response = new Response(true, 200);
     try {
-        $response = new Response(true, 200);
 
-        $writeDB->beginTransaction();
+        // $writeDB->beginTransaction();
 
         // Execute the above required migrations
         $stmt = $writeDB->prepare($CM00001);
         $response->addMessage($descriptionCM00001);
         $stmt->execute();
 
-        $stmt = $writeDB->prepare($CM00002);
-        $response->addMessage($descriptionCM00002);
-        $stmt->execute();
+        // $stmt = $writeDB->prepare($CM00002);
+        // $response->addMessage($descriptionCM00002);
+        // $stmt->execute();
 
         $stmt = $writeDB->prepare($CM00003);
         $response->addMessage($descriptionCM00003);
@@ -63,14 +63,15 @@ if ($_GET['username'] === 'clinic' && $_GET['password'] === 'clinic') {
         $response->addMessage($descriptionCM00008);
         $stmt->execute();
 
-        $writeDB->commit();
+        // $writeDB->commit();
 
         // Send response the migrations are valid
         $response->send();
     } catch (PDOException $ex) {
-        $writeDB->rollBack();
+        // $writeDB->rollBack();
         
-        $response = new Response(false, 500);
+        $response->setHttpStatusCode(500);
+        $response->setSuccess(false);
         $response->addMessage("Migration Error: " . $ex->getMessage());
         $response->send();
 

@@ -1,8 +1,8 @@
 <?php
 
-$descriptionCM00006 = "CM00006: Add relation PatientUser_pk";
+$descriptionCM00008 = "CM00008: Add relation PatientUser_pk";
 
-$CM00006 = "ALTER TABLE `patient` 
+$CM00008 = "ALTER TABLE `patient` 
             ADD CONSTRAINT `PatientUser_pk` 
             FOREIGN KEY (`UserId`) 
             REFERENCES `user`(`Id`) 
