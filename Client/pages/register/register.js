@@ -78,18 +78,6 @@ const validateEmail = (email) => {
   }
 };
 
-//Create user:
-
-// function createUser(btn) {
-
-//   console.log(btn);
-//   console.log("tu sam");
-//   btn.preventDefault();
-
-//   var formEl = document.forms.formRegisterId;
-//   var formData = new FormData(formEl);
-// }
-
 const form = document.getElementById("registerForm");
 form.addEventListener(
   "submit",
@@ -112,33 +100,13 @@ form.addEventListener(
       )
       .then((res) => {
         alert("You have successfully created an account");
-        window.location.href = "/var/www/html/Clinic/Client/index.html";
-
+        window.location.href =
+          "http://127.0.0.1:5500/Client/index.html";
       })
       .catch((err) => {
         console.log(window.location);
         alert("Creating not successfully");
       });
-
-    // console.log("render");
-    // const xhttp = new XMLHttpRequest();
-    // xhttp.open(
-    //   "POST",
-    //   "http://localhost/Clinic/Api/controllers/UserController.php"
-    // );
-    // xhttp.setRequestHeader("Content-Type", "application/json");
-    // xhttp.onreadystatechange = function () {
-    //   if (this.status == 201) {
-    //     alert("Creation successful");
-    //   }
-    // };
-
-    // xhttp.onreadystatechange = function () {
-    //   elseif(this.status != 201 || this.status != 200);
-    //    alert("Creation not successful");
-    // };
-
-    // xhttp.send(JSON.stringify(reqData));
   },
   false
 );
