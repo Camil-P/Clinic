@@ -1,6 +1,8 @@
 <?php
+header('Access-Control-Allow-Methods: *');
+header('Access-Control-Allow-Headers: Content-Type');
+header('Access-Control-Max-Age: 86400');
 header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json');
 
 require_once("../config/Database.php");
 require_once("../models/Appointment.php");

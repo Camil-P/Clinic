@@ -1,7 +1,9 @@
 <?php
 
+header('Access-Control-Allow-Methods: *');
+header('Access-Control-Allow-Headers: Content-Type');
+header('Access-Control-Max-Age: 86400');
 header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json');
 
 include_once('../config/Database.php');
 include_once('../models/Response.php');
@@ -17,6 +19,14 @@ try {
     $response->send();
 
     error_log("Connection error: " . $ex->getMessage(), 0);
+    exit();
+}
+
+// HANDLE OPTIONS REQUEST METHOD FOR POST
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    $response = new Response(true, 200);
+    $response->send();
     exit();
 }
 
