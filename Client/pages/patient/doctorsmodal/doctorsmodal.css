@@ -53,9 +53,11 @@ h3 {
 }
 
 .request_button {
-    background-color: coral;
+    border-radius: 4px;
+    background-color: rgb(174, 192, 180);
 }
 
 .request_button__one {
-    background-color: blue;
+    border-radius: 4px;
+    background-color: rgb(225, 135, 71);
 }
