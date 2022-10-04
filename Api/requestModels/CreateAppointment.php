@@ -10,15 +10,32 @@ class CreateAppointment
     private $_patientId;
     private $_doctorId;
 
-    public function __construct($writeDB, $serviceName, $date, $startingHour, $patientId, $doctorId)
+    public function __construct($writeDB, $reqBody)
     {
-        $this->setServiceName($serviceName);
-        $this->setDate($date);
-        $this->setStartingHour($startingHour);
-        $this->setPatientId($patientId);
-        $this->setDoctorId($doctorId);
+        if (!isset($reqBody->serviceName)){
+            throw new AppointmentException("Appointment - serviceName is not set.");
+        }
+        if (!isset($reqBody->date)){
+            throw new AppointmentException("Appointment - date is not set.");
+        }
+        if (!isset($reqBody->startingHour)){
+            throw new AppointmentException("Appointment - startingHour is not set.");
+        }
+        if (!isset($reqBody->patientId)){
+            throw new AppointmentException("Appointment - patientId is not set.");
+        }
+        if (!isset($reqBody->doctorId)){
+            throw new AppointmentException("Appointment - doctorId is not set.");
+        }
+
+        $this->setServiceName($reqBody->serviceName);
+        $this->setDate($reqBody->date);
+        $this->setStartingHour($reqBody->startingHour);
+        $this->setPatientId($reqBody->patientId);
+        $this->setDoctorId($reqBody->doctorId);
+        
         if ($this->appointmentAlreadyExists($writeDB, $this->getDate(), $this->getStartingHour(), $this->getPatientId(), $this->getDoctorID())) {
-            throw new AppointmentException("User or doctor already has an appointment for the given time.");
+            throw new AppointmentException("User or doctor already has an appointment for the requested time.");
         }
     }
 

@@ -1,7 +1,9 @@
 <?php
 
-// header('Access-Control-Allow-Origin: *');
-// header('Content-Type: application/json');
+header('Access-Control-Allow-Methods: *');
+header('Access-Control-Allow-Headers: Content-Type');
+header('Access-Control-Max-Age: 86400');
+header('Access-Control-Allow-Origin: *');
 
 include_once('../config/Database.php');
 include_once('../models/Response.php');
@@ -17,6 +19,14 @@ try {
     $response->send();
 
     error_log("Connection error: " . $ex->getMessage(), 0);
+    exit();
+}
+
+// HANDLE OPTIONS REQUEST METHOD FOR POST
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    $response = new Response(true, 200);
+    $response->send();
     exit();
 }
 
@@ -44,19 +54,9 @@ if (!$jsonData = json_decode(file_get_contents('php://input'))) {
 }
 
 try {
-    $createUser = new CreateUser($writeDB,
-                                 $jsonData->name,
-                                 $jsonData->surname,
-                                 $jsonData->gender,
-                                 $jsonData->birthPlace,
-                                 $jsonData->birthDate,
-                                 $jsonData->jmbg,
-                                 $jsonData->phoneNumber,
-                                 $jsonData->email,
-                                 $jsonData->password,
-                                '');
+    $createUser = new CreateUser($writeDB, $jsonData, '');
 
-     $query = $writeDB->prepare("INSERT INTO user 
+    $query = $writeDB->prepare("INSERT INTO user 
                                     (name, 
                                     surname,
                                     gender,

@@ -1,4 +1,8 @@
 <?php
+header('Access-Control-Allow-Methods: *');
+header('Access-Control-Allow-Headers: Content-Type');
+header('Access-Control-Max-Age: 86400');
+header('Access-Control-Allow-Origin: *');
 
 require_once("../config/Database.php");
 require_once("../models/Appointment.php");
@@ -210,7 +214,7 @@ elseif (empty($_GET)) {
                 exit();
             }
 
-            $createAppointment = new CreateAppointment($writeDB, $jsonData->serviceName, $jsonData->date, $jsonData->startingHour, $jsonData->patientId, $jsonData->doctorId);
+            $createAppointment = new CreateAppointment($writeDB, $jsonData);
 
             $query = $writeDB->prepare("INSERT INTO appointment 
                                             (ServiceName, 
@@ -218,22 +222,12 @@ elseif (empty($_GET)) {
                                             StartingHour, 
                                             PatientId, 
                                             DoctorId) 
-                                        values 
-                                            (:serviceName,
-                                            :date,
-                                            :startingHour,
-                                            :patientId,
-                                            :doctorId);");
-            $serviceName = $createAppointment->getServiceName();
-            $query->bindParam(':serviceName', $serviceName, PDO::PARAM_STR);
-            $date = $createAppointment->getDate();
-            $query->bindParam(':date', $date, PDO::PARAM_STR);
-            $startingHour = $createAppointment->getStartingHour();
-            $query->bindParam(':startingHour', $startingHour, PDO::PARAM_INT);
-            $patientId = $createAppointment->getPatientId();
-            $query->bindParam(':patientId', $patientId, PDO::PARAM_INT);
-            $doctorId = $createAppointment->getDoctorID();
-            $query->bindParam(':doctorId', $doctorId, PDO::PARAM_INT);
+                                        values (
+                                           '{$createAppointment->getServiceName()}',
+                                           '{$createAppointment->getDate()}',
+                                            {$createAppointment->getStartingHour()},
+                                            {$createAppointment->getPatientId()},
+                                            {$createAppointment->getDoctorID()});");
             $query->execute();
 
             $rowCount = $query->rowCount();

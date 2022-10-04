@@ -9,7 +9,6 @@ class UserException extends Exception
 
 class User
 {
-
   private $_id;
   private $_name;
   private $_surname;
@@ -22,8 +21,9 @@ class User
   private $_role;
   private $_password;
   private $_disabled;
+  private $_loginAttempts;
 
-  public function __constract($id, $name, $surname, $gender, $birthPlace, $birthDate, $jmbg, $phoneNumber, $email, $role, $password, $disabled)
+  public function __construct($id, $name, $surname, $gender, $birthPlace, $birthDate, $jmbg, $phoneNumber, $email, $role, $password, $disabled, $loginAttempts)
   {
     $this->setId($id);
     $this->setName($name);
@@ -37,6 +37,7 @@ class User
     $this->setRole($role);
     $this->setPassword($password);
     $this->setDisabled($disabled);
+    $this->setLoginAttempts($loginAttempts);
   }
 
   public function asArray()
@@ -53,6 +54,8 @@ class User
     $user['email'] = $this->getEmail();
     $user['role'] = $this->getRole();
     $user['password'] = $this->getPassword();
+    $user['disabled'] = $this->isDisabled();
+    $user['loginAttempts'] = $this->getLoginAttempts();
 
     return $user;
   }
@@ -153,12 +156,12 @@ class User
       throw new UserException("User - Email is not valid.");
     }
 
-    $this->_email = $email;
+    $this->_email = trim($email);
   }
 
   public function setPassword($password)
   {
-    if (strlen($password) < 0 || strlen($password) > 16) {
+    if (strlen($password) < 0 || strlen($password) > 255) {
       throw new UserException("User - Password is not valid.");
     }
 
@@ -166,11 +169,19 @@ class User
   }
 
   public function setDisabled($disabled){
-    if (!is_bool($disabled)){
+    if ($disabled != 0 & $disabled != 1){
       throw new UserException("User - Disabled must be boolean value.");
     }
 
     $this->_disabled = $disabled;
+  }
+
+  public function setLoginAttempts($loginAttempts){
+    if ($loginAttempts >= 3){
+      throw new UserException("User's account is currently locked out");
+    }
+
+    $this->_loginAttempts = $loginAttempts;
   }
 
   // GETTERS 
@@ -230,8 +241,13 @@ class User
     return $this->_password;
   }
 
-  public function getDisabled()
+  public function isDisabled()
   {
-    return $this->_disabled;
+    return !!$this->_disabled;
+  }
+
+  public function getLoginAttempts()
+  {
+    return $this->_loginAttempts;
   }
 }

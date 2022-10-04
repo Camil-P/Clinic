@@ -2,7 +2,7 @@
 
 $descriptionCM00003 = "CM00003: Create Basic User table";
 
-$CM00003 = "CREATE TABLE `user` (
+$CM00003 = "CREATE TABLE `clinic`.`user` (
                 `Id` int(11) NOT NULL AUTO_INCREMENT,
                 `Name` varchar(25) NOT NULL,
                 `Surname` varchar(25) NOT NULL,
