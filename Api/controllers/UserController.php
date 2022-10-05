@@ -1,9 +1,9 @@
 <?php
 
-header('Access-Control-Allow-Methods: *');
 header('Access-Control-Allow-Headers: Content-Type');
 header('Access-Control-Max-Age: 86400');
 header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST');
 
 include_once('../config/Database.php');
 include_once('../models/Response.php');
@@ -131,5 +131,3 @@ try {
     error_log("DB error: " . $ex->getMessage(), 0);
     exit();
 }
-
-
