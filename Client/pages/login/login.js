@@ -25,13 +25,16 @@ form.addEventListener(
         setCookie(
           "accessToken",
           data?.data.accessToken,
-          data.data.accessTokenExpiresIn
+          1,
+          1,
+          1,
+          1
         );
         console.log(data);
         if(data.data.role === "Admin"){
         }
         else if(data.data.role !== "Admin" ){
-            window.location.href = "http://127.0.0.1:5500/Client/pages/patient/patient.html";
+          window.location.href = "http://127.0.0.1:5500/Client/pages/patient/patient.html";
         }
     })
       .catch((err) => {
