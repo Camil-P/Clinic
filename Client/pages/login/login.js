@@ -25,18 +25,20 @@ form.addEventListener(
         setCookie(
           "accessToken",
           data?.data.accessToken,
-          1,
-          1,
-          1,
-          1
+          data.data.accessTokenExpiresIn
         );
-        console.log(data);
-        if(data.data.role === "Admin"){
+        setCookie("role", data?.data.role, data.data.accessTokenExpiresIn);
+        if (data.data.role === "Admin") {
+          window.location.href =
+            "http://127.0.0.1:5500/Client/pages/Admin/admin.html";
+        } else if (data.data.role === "Patient") {
+          window.location.href =
+            "http://127.0.0.1:5500/Client/pages/patient/patient.html";
+        } else if (data.data.role === "Doctor") {
+          window.location.href =
+            "http://127.0.0.1:5500/Client/pages/Doctor/doctor.html";
         }
-        else if(data.data.role !== "Admin" ){
-          window.location.href = "http://127.0.0.1:5500/Client/pages/patient/patient.html";
-        }
-    })
+      })
       .catch((err) => {
         console.log(err);
         alert("Login failed");
