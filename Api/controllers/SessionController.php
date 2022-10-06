@@ -3,11 +3,6 @@
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Content-Type');
-/*
-header('Access-Control-Allow-Headers: Content-Type');
-header('Access-Control-Max-Age: 86400');
-header('Access-Control-Allow-Origin: *');
-*/;
 
 include_once('../config/Database.php');
 include_once('../models/Response.php');
@@ -236,7 +231,6 @@ if (array_key_exists("id", $_GET)) {
     $accessToken = base64_encode(bin2hex(openssl_random_pseudo_bytes(24)) . time());
 
     $accessTokenExpirySeconds = 432000;
-    // echo json_encode($user->asArray());
   } catch (SessionException $ex) {
     $response = new Response(false, 400);
     $response->addMessage($ex->getMessage());
