@@ -1,98 +1,98 @@
-body{
-    display: flex;
-    flex-direction:column;
-    min-height: 100vh;
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-.form-doctor{
-    width: 60%;
-    height: 800px;
-    background-color: #24262b;
-    position: fixed;
-    z-index: 1;
-    left: 350px;
-    top: 100px;
-    border: 1px solid greenyellow;
-    border-radius: 10px;
+.form-doctor {
+  width: 60%;
+  height: 800px;
+  background-color: #24262b;
+  position: fixed;
+  z-index: 1;
+  left: 350px;
+  top: 100px;
+  border: 1px solid greenyellow;
+  border-radius: 10px;
 }
 
-#close-modal{
-    font-size: 30px;
-    width: 70%;
-    height: 40px;
-    background-color: #bbbbbb;
-    color: red;
-    cursor: pointer;
-    transition: 0.4s ease-in-out all;
+#close-modal {
+  font-size: 30px;
+  width: 70%;
+  height: 40px;
+  background-color: #bbbbbb;
+  color: red;
+  cursor: pointer;
+  transition: 0.4s ease-in-out all;
 }
 
 #close-modal:hover {
-    background-color: #bb0707;
-    color: white;
-  }
+  background-color: #bb0707;
+  color: white;
+}
 
-.container-register-doctor{
-    display: none;
+.container-register-doctor {
+  display: none;
 }
 
 .register-body {
-	background-color: rgb(29, 31, 31);
-	
+  background-color: rgb(29, 31, 31);
 }
 
 .title-register {
-	text-decoration: underline greenyellow;
+  text-decoration: underline greenyellow;
 }
 
 label {
-    font-size: 16px;
-    font-weight: 300;
-    color: #bbbbbb;
+  font-size: 16px;
+  font-weight: 300;
+  color: #bbbbbb;
 }
 
-h1{
-	font-size: 18px;
-    color: #ffffff;
-    font-weight: 500;
+h1 {
+  font-size: 18px;
+  color: #ffffff;
+  font-weight: 500;
 }
 
-.form-doctor-register{
-    width: 70%;
+.form-doctor-register {
+  width: 70%;
 }
 
-.form-doctor{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 30px;
+.form-doctor {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
 }
 
-.table , th,td {
-    border: 1px solid black;
-    width: 350px;
-    height: 50px;
+.table,
+th,
+td {
+  border: 1px solid black;
+  width: 350px;
+  height: 50px;
 }
-
 
 .table td {
-text-align: center;
+  text-align: center;
 }
-.table{
-    width: 100%;
+.table {
+  width: 100%;
 }
 
-.table-container{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 80%;
-    height: 300px;
+.table-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  height: 300px;
 }
-.table-request{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
+.table-request {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
 }
