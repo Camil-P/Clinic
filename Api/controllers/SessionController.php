@@ -1,9 +1,8 @@
 <?php
 
-header('Access-Control-Allow-Methods: *');
-header('Access-Control-Allow-Headers: Content-Type');
-header('Access-Control-Max-Age: 86400');
+header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Headers: Content-Type');
 
 include_once('../config/Database.php');
 include_once('../models/Response.php');
@@ -40,7 +39,11 @@ if (array_key_exists("id", $_GET)) {
     $response->send();
     exit();
   }
-
+  if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    $response = new Response(true, 200);
+    $response->send();
+    exit();
+}
   if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     try {
       $query = $writeDB->prepare("DELETE FROM session
@@ -71,7 +74,7 @@ if (array_key_exists("id", $_GET)) {
     }
   }
 
-  elseif ($_SERVER['REQUEST_METHOD'] === 'PATCH'){
+  // elseif ($_SERVER['REQUEST_METHOD'] === 'PATCH'){
 
   //   if ($_SERVER['CONTENT_TYPE'] !== 'application/json') {
   //     $response = new Response(false, 400);
@@ -139,8 +142,13 @@ if (array_key_exists("id", $_GET)) {
     //   exit();
     // }
 
-  }
+  // }
 } elseif (empty($_GET)) {
+  if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    $response = new Response(true, 200);
+    $response->send();
+    exit();
+}
   if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     $response = new Response(false, 405);
     $response->addMessage("Method not allowed.");
@@ -223,7 +231,6 @@ if (array_key_exists("id", $_GET)) {
     $accessToken = base64_encode(bin2hex(openssl_random_pseudo_bytes(24)) . time());
 
     $accessTokenExpirySeconds = 432000;
-    // echo json_encode($user->asArray());
   } catch (SessionException $ex) {
     $response = new Response(false, 400);
     $response->addMessage($ex->getMessage());
@@ -303,3 +310,4 @@ if (array_key_exists("id", $_GET)) {
   $response->send();
   exit();
 }
+;

@@ -8,6 +8,7 @@ require_once("../config/Database.php");
 require_once("../models/Appointment.php");
 require_once("../models/Response.php");
 require_once("../requestModels/CreateAppointment.php");
+require_once("../config/Auth.php");
 
 try {
     $writeDB = DB::connectWriteDB();
@@ -21,23 +22,41 @@ try {
     exit();
 }
 
-// Handle Get all Appointments by doctorId/patientId Request 
-if (
-    array_key_exists("patientId", $_GET)
-    && array_key_exists("doctorId", $_GET)
-) {
-    $doctorId = $_GET["doctorId"];
-    $patientId = $_GET["patientId"];
+// AUTH
 
-    if (($doctorId == '' || !is_numeric($doctorId))
-        && ($patientId == '' || !is_numeric($patientId))
-    ) {
+$authorizedUser = authorize($writeDB);
 
-        $response = new Response(false, 400);
-        $response->addMessage("Query values are not valid");
+if ($authorizedUser['role'] === 'Patient') {
+
+    $query = $readDB->prepare('SELECT
+                                    Id,
+                                    UserId,
+                                    DoctorId
+                                FROM patient
+                                WHERE
+                                    UserId = :userId;');
+    $query->bindParam(':userId', $authorizedUser['id'], PDO::PARAM_INT);
+    $query->execute();
+
+    $rowCount = $query->rowCount();
+    if ($rowCount === 0) {
+        $response = new Response(false, 401);
+        $response->addMessage("Patient does not exist.");
         $response->send();
         exit();
     }
+    $row = $query->fetch(PDO::FETCH_ASSOC);
+
+    $patientId = $row['Id'];
+    $doctorId = $row['DoctorId'];
+}
+else{
+    $doctorId = $authorizedUser['id'];
+}
+
+// Handle Get all Appointments by doctorId/patientId Request 
+
+if (!array_key_exists('appointmentId', $_GET) && $_SERVER['REQUEST_METHOD'] === 'GET') {
     try {
         $query = $readDB->prepare('SELECT
                                     Id,
@@ -89,7 +108,7 @@ if (
 }
 
 // Handle Methods that require appointmentId param
-elseif (array_key_exists('appointmentId', $_GET)) {
+elseif (array_key_exists('appointmentId', $_GET) && ($_SERVER['REQUEST_METHOD'] === 'GET' || $_SERVER['REQUEST_METHOD'] === 'DELETE')) {
 
     $appointmentId = $_GET['appointmentId'];
     if ($appointmentId == '' || !is_numeric($appointmentId)) {
@@ -111,9 +130,12 @@ elseif (array_key_exists('appointmentId', $_GET)) {
                                                 DoctorId
                                             FROM appointment
                                             WHERE 
-                                                Id = :appointmentId;');
+                                                Id = :appointmentId AND
+                                                (PatientId = :patientId OR DoctorId = :doctorId);');
 
                 $query->bindParam(':appointmentId', $appointmentId, PDO::PARAM_INT);
+                $query->bindParam(':patientId', $patientId, PDO::PARAM_INT);
+                $query->bindParam(':doctorId', $doctorId, PDO::PARAM_INT);
                 $query->execute();
 
                 $rowCount = $query->rowCount();
@@ -214,6 +236,19 @@ elseif (empty($_GET)) {
                 exit();
             }
 
+            if ($authorizedUser['role'] === 'Patient') {
+                $jsonData = (array)$jsonData;
+                $jsonData['patientId'] = $patientId;
+                $jsonData['doctorId'] = $doctorId;
+                $jsonData = (object)$jsonData;
+            }
+            else{
+                $jsonData = (array)$jsonData;
+                $jsonData['doctorId'] = $doctorId;
+                $jsonData = (object)$jsonData;
+                $patientId = $jsonData->patientId;
+            }
+
             $createAppointment = new CreateAppointment($writeDB, $jsonData);
 
             $query = $writeDB->prepare("INSERT INTO appointment 
@@ -227,7 +262,7 @@ elseif (empty($_GET)) {
                                            '{$createAppointment->getDate()}',
                                             {$createAppointment->getStartingHour()},
                                             {$createAppointment->getPatientId()},
-                                            {$createAppointment->getDoctorID()});");
+                                            {$createAppointment->getDoctorId()});");
             $query->execute();
 
             $rowCount = $query->rowCount();
@@ -272,7 +307,7 @@ elseif (empty($_GET)) {
             exit();
         } catch (PDOException $ex) {
             $response = new Response(false, 500);
-            $response->addMessage("There was a problem with creating a task in DB: " . $ex->getMessage());
+            $response->addMessage("There was a problem with creating a appointment in DB: " . $ex->getMessage());
             $response->send();
 
             error_log("DB error: " . $ex->getMessage(), 0);

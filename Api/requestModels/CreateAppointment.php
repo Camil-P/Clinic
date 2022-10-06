@@ -173,7 +173,7 @@ class CreateAppointment
         return $this->_patientId;
     }
 
-    public function getDoctorID()
+    public function getDoctorId()
     {
         return $this->_doctorId;
     }
