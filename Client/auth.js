@@ -19,19 +19,7 @@
 
         break;
       default:
-        // window.location.href = "http://127.0.0.1:5500/Client/index.html";
         break;
     }
-
-    // if (role === "Admin") {
-    //   window.location.href =
-    //     "http://127.0.0.1:5500/Client/pages/Admin/admin.html";
-    // } else if (role === "Patient") {
-    //   window.location.href =
-    //     "http://127.0.0.1:5500/Client/pages/patient/patient.html";
-    // } else if (role === "Doctor") {
-    //   window.location.href =
-    //     "http://127.0.0.1:5500/Client/pages/Doctor/doctor.html";
-    // }
   }
 })();

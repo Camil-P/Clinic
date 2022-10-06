@@ -1,3 +1,9 @@
+body{
+    display: flex;
+    flex-direction:column;
+    min-height: 100vh;
+}
+
 .form-doctor{
     width: 60%;
     height: 800px;
@@ -16,7 +22,14 @@
     height: 40px;
     background-color: #bbbbbb;
     color: red;
+    cursor: pointer;
+    transition: 0.4s ease-in-out all;
 }
+
+#close-modal:hover {
+    background-color: #bb0707;
+    color: white;
+  }
 
 .container-register-doctor{
     display: none;
@@ -53,4 +66,33 @@ h1{
     justify-content: center;
     align-items: center;
     gap: 30px;
+}
+
+.table , th,td {
+    border: 1px solid black;
+    width: 350px;
+    height: 50px;
+}
+
+
+.table td {
+text-align: center;
+}
+.table{
+    width: 100%;
+}
+
+.table-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    height: 300px;
+}
+.table-request{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
 }
