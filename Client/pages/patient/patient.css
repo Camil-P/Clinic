@@ -1,0 +1,141 @@
+.patient-container {
+  width: 100%;
+  height: 1500px;
+  background-color: #24262b;
+}
+
+.doctors-card {
+  display: flex;
+  width: 80%;
+  height: 400px;
+  /* border: 1px solid greenyellow; */
+  margin: auto;
+}
+
+.doctors-image {
+  width: 30%;
+  height: 100%;
+  /* border: 1px solid greenyellow; */
+}
+
+.doctors-info {
+  width: 40%;
+  height: 100%;
+  /* border: 1px solid greenyellow; */
+}
+.image-doctors {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.img-doctor {
+  width: 100%;
+  height: 80%;
+  border-radius: 10px;
+}
+.doctors-info-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.doctors-info-container h2 {
+  font-weight: 100;
+  color: white;
+  text-decoration: underline greenyellow;
+}
+.doctors-select {
+  width: 20%;
+  height: 100%;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+  width: 100%;
+  height: 100%;
+  /* border: 1px solid rebeccapurple; */
+}
+
+.btn-doctor {
+  font-size: 18px;
+  width: 100%;
+  height: 40px;
+  background-color: rgb(7, 171, 116);
+  border-radius: 5px;
+  margin-top: 5px;
+}
+
+#profile-btn {
+  background-color: green;
+}
+
+.modal-profile {
+  position: fixed;
+  width: 70%;
+  height: 600px;
+  border: 1px solid gainsboro;
+  left: 330px;
+  top: 200px;
+  background-color: #24262b;
+  display: none;
+}
+
+.container-info {
+    width: 100%;
+    height: 90%;
+    /* background-color: aqua; */
+}
+
+#close-modal{
+    height: 10%;
+    width: 100%;
+    font-size: 30px;
+    background-color: #24262b;
+    color: red;
+}
+
+.container-info{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-info{
+    width: 40%;
+    height: 60%;
+    /* border: 1px solid black; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+
+}
+.image-info img {
+    width: 80%;
+    height: 90%;
+    border-radius: 10px;
+}
+.text-info{
+    width: 60%;
+    height: 60%;
+    /* border: 1px solid black; */
+
+}
+.text-info{
+    display: flex;
+    flex-direction: column;
+}
+
+.text-info h2 {
+    margin-left: 20px;
+    font-weight: 100;
+    color: white;
+}
