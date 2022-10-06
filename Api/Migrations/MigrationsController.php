@@ -67,6 +67,14 @@ if ($_GET['username'] === 'clinic' && $_GET['password'] === 'clinic') {
         $response->addMessage($descriptionCM00009);
         $stmt->execute();
 
+        $stmt = $writeDB->prepare($CM00010);
+        $response->addMessage($descriptionCM00010);
+        $stmt->execute();
+
+        $stmt = $writeDB->prepare($CM00011);
+        $response->addMessage($descriptionCM00011);
+        $stmt->execute();
+
         // $writeDB->commit();
 
         // Send response the migrations are valid

@@ -1,6 +1,6 @@
 <?php
 
-$descriptionCM00010 = "CM00010: Add relation AppointmentDoctor_fk";
+$descriptionCM00010 = "CM00010: Add relation PatientDoctor_pk";
 
 $CM00010 = "ALTER TABLE `patient`
             ADD CONSTRAINT `PatientDoctor_pk`
