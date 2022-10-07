@@ -14,6 +14,7 @@ require_once('CM00008.php');
 require_once('CM00009.php');
 require_once('CM00010.php');
 require_once('CM00011.php');
+require_once('CM00012.php');
 
 if ($_GET['username'] === 'clinic' && $_GET['password'] === 'clinic') {
 
@@ -76,6 +77,10 @@ if ($_GET['username'] === 'clinic' && $_GET['password'] === 'clinic') {
 
         $stmt = $writeDB->prepare($CM00011);
         $response->addMessage($descriptionCM00011);
+        $stmt->execute();
+        
+        $stmt = $writeDB->prepare($CM00012);
+        $response->addMessage($descriptionCM00012);
         $stmt->execute();
 
         // $writeDB->commit();

@@ -1,12 +1,10 @@
 <?php
 
-// header('Access-Control-Allow-Headers: Content-Type, Authorization');
-header('Access-Control-Max-Age: 86400');
-// header('Access-Control-Allow-Origin: *');
-// header('Access-Control-Allow-Methods: POST');
-header("Access-Control-Allow-Origin", "http://localhost:5500");
-header("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
-header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+header('Access-Control-Allow-Headers: Content-Type');
+header('Access-Control-Max-Age: 86400');        
+header("Access-Control-Allow-Origin: *");
+header('Access-Control-Allow-Credentials: true');
+header('Access-Control-Allow-Methods: *');
 
 include_once('../config/Database.php');
 include_once('../models/Response.php');
