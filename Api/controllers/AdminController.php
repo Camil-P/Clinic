@@ -3,7 +3,7 @@
 header('Access-Control-Allow-Headers: Content-Type');
 header('Access-Control-Max-Age: 86400');        
 header("Access-Control-Allow-Origin: *");
-header('Access-Control-Allow-Credentials: true');
+// header('Access-Control-Allow-Credentials: true');
 header('Access-Control-Allow-Methods: *');
 
 include_once('../config/Database.php');
