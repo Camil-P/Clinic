@@ -1,29 +1,30 @@
+const token = getCookie('accessToken');
+
 const fetchDoctors = () => {
   axios
-  .get(
-    "http://localhost/Clinic/Api/controllers/PatientController.php?fetch=doctors",
-    {
-      headers: {
-        "Authorization": token,
-      },
-    }
-  )
-  .then((res) => {
-    console.log(res)
-    alert("You have successfully created an account");
-  })
-  .catch(({response}) => {
-    console.log(response.data);
-    alert(response.data.messages[0]);
-    throw err;
-  });
+    .get(
+      "http://localhost/Clinic/Api/controllers/PatientController.php?fetch=doctors",
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    )
+    .then((res) => {
+      console.log(res);
+      alert("You have successfully created an account");
+    })
+    .catch(({ response }) => {
+      console.log(response);
+      alert(response);
+      // throw err;
+    });
 };
 
-fetch();
+fetchDoctors();
 
 const logoutBtn = document.querySelector("#logout-patient");
 console.log(logoutBtn);
-
 
 logoutBtn?.addEventListener("click", (el) => {
   el.preventDefault();
