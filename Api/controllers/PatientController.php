@@ -99,7 +99,7 @@ if (array_key_exists('fetch', $_GET)) {
                 exit();
             } catch (PDOException $ex) {
                 $response = new Response(false, 500);
-                $response->addMessage("There was a problem with creating a user in DB: \n" . $ex->getMessage());
+                $response->addMessage("There was a problem with fetch doctors from DB: \n" . $ex->getMessage());
                 $response->send();
 
                 error_log("DB error: " . $ex->getMessage(), 0);
