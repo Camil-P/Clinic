@@ -1,9 +1,3 @@
-const getCookie = (cookieName) => {
-  return document.cookie
-    .split(";")
-    .find((row) => row.includes(cookieName + "="))
-    ?.split("=")[1];
-};
 
 // const setCookie = (cookieName, value, maxAge) => {
 //   console.log(cookieName, value, maxAge);
@@ -27,9 +21,9 @@ function setCookie(
   key,
   value,
   expireSeconds
-) {
+  ) {
   var expireDate = new Date();
-
+  
   if (expireSeconds) {
     expireDate.setSeconds(expireDate.getSeconds() + expireSeconds);
   }
@@ -42,9 +36,9 @@ function setCookie(
     ";path=/" +
     ";expires=" +
     expireDate.toUTCString();
-}
-
-function deleteCookie(name) {
+  }
+  
+  function deleteCookie(name) {
   setCookie(name, "", null, null, null, 1);
 }
 
@@ -53,3 +47,10 @@ function get_cookie(name) {
     return c.trim().startsWith(name + "=");
   });
 }
+
+const getCookie = (cookieName) => {
+  return document.cookie
+    .split(";")
+    .find((row) => row.includes(cookieName + "="))
+    ?.split("=")[1];
+};

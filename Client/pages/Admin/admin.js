@@ -13,8 +13,6 @@ const modalProfile = document.getElementsByClassName(
 )[0];
 const btn_profile = document.getElementById("add-btn");
 const btnClose = document.getElementById("close-modal");
-console.log(modalProfile);
-console.log(modalProfile, btn_profile);
 
 btn_profile.addEventListener("click", (el) => {
   modalProfile.style.display = "block";
@@ -48,7 +46,6 @@ const listDoctors = [
 ];
 
 const tableHeaders = document.getElementsByTagName("tbody")[0];
-console.log(tableHeaders, "dwadawdwa");
 
 function createDynamicTable(listDoctors) {
   listDoctors.forEach((doctor) => {
@@ -70,3 +67,44 @@ function createDynamicTable(listDoctors) {
   });
 }
 createDynamicTable(listDoctors);
+
+//Created user from Role
+const token = getCookie('accessToken');
+
+const form = document.getElementById("registerFromAdmin");
+form.addEventListener(
+  "submit",
+  async (event) => {
+    event.preventDefault();
+    console.log(token)
+    const formData = new FormData(form);
+    const reqData = {};
+    for (var [key, value] of formData.entries()) {
+      reqData[key] = value;
+    }
+    res = await axios
+      .post(
+        "http://localhost/Clinic/Api/controllers/AdminController.php",
+        JSON.stringify(reqData),
+        {
+          headers: {
+            "Authorization": token,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res)
+        alert("You have successfully created an account");
+        // window.location.href = "http://127.0.0.1:5500/Client/index.html";
+      })
+      .catch((err) => {
+        // const messageErr = err.response.data.messages
+        
+        // alert(`Creating not successfully:  ${messageErr}`);
+        throw err;
+      });
+  },
+  false
+);
+
