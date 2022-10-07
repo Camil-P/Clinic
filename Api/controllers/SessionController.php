@@ -1,6 +1,6 @@
 <?php
 
-header('Access-Control-Allow-Methods: POST');
+header('Access-Control-Allow-Methods: *');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Content-Type');
 
@@ -43,7 +43,7 @@ if (array_key_exists("id", $_GET)) {
     $response = new Response(true, 200);
     $response->send();
     exit();
-}
+  }
   if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     try {
       $query = $writeDB->prepare("DELETE FROM session
@@ -100,7 +100,7 @@ if (array_key_exists("id", $_GET)) {
   //   }
 
   //   try {
-      
+
   //     $query = $writeDB->prepare("SELECT 
   //                                   session.Id as sessionId,
   //                                   session.UserId as userId,
@@ -133,14 +133,14 @@ if (array_key_exists("id", $_GET)) {
   //     echo json_encode($row);
   //     exit();
 
-    // } catch (PDOException $ex) {
-    //   $response = new Response(false, 500);
-    //   $response->addMessage("There was a problem refreshing the accessToken. Please try again.");
-    //   $response->send();
+  // } catch (PDOException $ex) {
+  //   $response = new Response(false, 500);
+  //   $response->addMessage("There was a problem refreshing the accessToken. Please try again.");
+  //   $response->send();
 
-    //   error_log("DB error: " . $ex->getMessage(), 0);
-    //   exit();
-    // }
+  //   error_log("DB error: " . $ex->getMessage(), 0);
+  //   exit();
+  // }
 
   // }
 } elseif (empty($_GET)) {
@@ -148,7 +148,7 @@ if (array_key_exists("id", $_GET)) {
     $response = new Response(true, 200);
     $response->send();
     exit();
-}
+  }
   if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     $response = new Response(false, 405);
     $response->addMessage("Method not allowed.");
@@ -309,5 +309,4 @@ if (array_key_exists("id", $_GET)) {
   $response->addMessage("Method not allowed.");
   $response->send();
   exit();
-}
-;
+};

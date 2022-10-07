@@ -1,9 +1,12 @@
 <?php
 
-header('Access-Control-Allow-Headers: Content-Type');
+// header('Access-Control-Allow-Headers: Content-Type, Authorization');
 header('Access-Control-Max-Age: 86400');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: *');
+// header('Access-Control-Allow-Origin: *');
+// header('Access-Control-Allow-Methods: POST');
+header("Access-Control-Allow-Origin", "http://localhost:5500");
+header("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
+header("Access-Control-Allow-Headers", "Content-Type, Authorization");
 
 include_once('../config/Database.php');
 include_once('../models/Response.php');
@@ -18,14 +21,14 @@ try {
     $response = new Response(false, 500);
     $response->addMessage("Database conn error.");
     $response->send();
-    
+
     error_log("Connection error: " . $ex->getMessage(), 0);
     exit();
 }
 
 $authorizedUser = authorize($writeDB);
 
-if ($authorizedUser['role'] !== "Admin"){
+if ($authorizedUser['role'] !== "Admin") {
     $response = new Response(false, 401);
     $response->addMessage("You are not authorized");
     $response->send();
@@ -46,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $response->send();
         exit();
     }
-    
+
     if (!$jsonData = json_decode(file_get_contents('php://input'))) {
         $response = new Response(false, 400);
         $response->addMessage("Request body is not valid JSON.");
@@ -56,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
         $createUser = new CreateUser($writeDB, $jsonData, $jsonData->role);
-    
+
         $query = $writeDB->prepare("INSERT INTO user 
                                         (name, 
                                         surname,
@@ -80,45 +83,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         '{$createUser->getPassword()}',
                                         '{$createUser->getRole()}');");
         $query->execute();
-        
+
         $rowCount = $query->rowCount();
-        if ($rowCount === 0){
+        if ($rowCount === 0) {
             $response = new Response(false, 500);
             $response->addMessage("User was not created.");
             $response->send();
             exit();
         }
-    
+
         $lastUserId = $writeDB->lastInsertId();
-    
-        if ($createUser->getRole() === 'Patient'){
+
+        if ($createUser->getRole() === 'Patient') {
             $query = $writeDB->prepare("INSERT INTO patient 
                                             (UserId) 
                                         values ($lastUserId);");
             $query->execute();
-    
+
             $rowCount = $query->rowCount();
-            if ($rowCount === 0){
+            if ($rowCount === 0) {
                 $query = $writeDB->prepare("DELETE FROM user 
                                             WHERE $lastUserId;");
                 $query->execute();
-        
+
                 $response = new Response(false, 500);
                 $response->addMessage("Patient was not created.");
                 $response->send();
                 exit();
             }
         }
-    
+
         $responseData = $createUser->asArray();
         $responseData['id'] = $lastUserId;
-        
+
         $response = new Response(true, 201);
         $response->addMessage('User successfully created.');
         $response->setData($responseData);
         $response->send();
         exit();
-        
     } catch (UserException $ex) {
         $response = new Response(false, 400);
         $response->addMessage($ex->getMessage());
@@ -128,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $response = new Response(false, 500);
         $response->addMessage("There was a problem with creating a user in DB: \n" . $ex->getMessage());
         $response->send();
-    
+
         error_log("DB error: " . $ex->getMessage(), 0);
         exit();
     }
