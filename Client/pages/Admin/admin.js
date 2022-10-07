@@ -100,12 +100,13 @@ form.addEventListener(
         // window.location.href = "http://127.0.0.1:5500/Client/index.html";
       })
       .catch(({response}) => {
-        console.log(response.data);
-        alert(response.data.messages[0]);
+        console.log(response)
+        // console.log(response.data);
+        // alert(response.data.messages[0]);
         // const messageErr = err.response.data.messages
         
         // alert(`Creating not successfully:  ${messageErr}`);
-        throw err;
+        // throw err;
       });
   },
   false
