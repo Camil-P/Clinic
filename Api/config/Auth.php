@@ -3,16 +3,17 @@
 function authorize($writeDB)
 {
   $headers = apache_request_headers();
-  if (!isset($headers['Authorization']) || strlen($headers['Authorization']) < 1) {
-    $response = new Response(false, 401);
-    $response->addMessage("Authorization is missing from the header.");
-    $response->send();
-    exit();
-  }
+  $accessToken = $headers['Authorization'];
 
   try {
-
-    $accessToken = $headers['Authorization'];
+    if (!isset($accessToken) || (strlen($accessToken) < 1)) {
+      exit();
+      $response = new Response(false, 401);
+      $response->addMessage("Authorization is missing from the header.");
+      $response->send();
+      exit();
+    }
+  
 
     $query = $writeDB->prepare("SELECT 
                                 UserId,

@@ -1,8 +1,8 @@
 <?php
-header('Access-Control-Allow-Methods: *');
-header('Access-Control-Allow-Headers: Content-Type');
-header('Access-Control-Max-Age: 86400');
-header('Access-Control-Allow-Origin: *');
+// header('Access-Control-Allow-Methods: *');
+header('Access-Control-Allow-Headers: *');
+// header('Access-Control-Max-Age: 86400');
+// header('Access-Control-Allow-Origin: *');
 
 require_once("../config/Database.php");
 require_once("../models/Response.php");
@@ -32,11 +32,11 @@ if ($authorizedUser['role'] !== "Patient") {
     exit();
 }
 
-if (array_key_exists('fetchQuery', $_GET)) {
-    $fetchBy = $_GET['fetchQuery'];
+if (array_key_exists('fetch', $_GET)) {
+    $fetch = $_GET['fetch'];
 
     if ($_SERVER["REQUEST_METHOD"] === "GET") {
-        if ($fetchBy === "doctors") {
+        if ($fetch === "doctors") {
 
             try {
 

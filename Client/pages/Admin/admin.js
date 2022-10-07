@@ -82,7 +82,7 @@ form.addEventListener(
     for (var [key, value] of formData.entries()) {
       reqData[key] = value;
     }
-    res = await axios
+    await axios
       .post(
         "http://localhost/Clinic/Api/controllers/AdminController.php",
         JSON.stringify(reqData),
@@ -96,9 +96,12 @@ form.addEventListener(
       .then((res) => {
         console.log(res)
         alert("You have successfully created an account");
+        modalProfile.style.display = "none";
         // window.location.href = "http://127.0.0.1:5500/Client/index.html";
       })
-      .catch((err) => {
+      .catch(({response}) => {
+        console.log(response.data);
+        alert(response.data.messages[0]);
         // const messageErr = err.response.data.messages
         
         // alert(`Creating not successfully:  ${messageErr}`);

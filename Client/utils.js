@@ -52,5 +52,5 @@ const getCookie = (cookieName) => {
   return document.cookie
     .split(";")
     .find((row) => row.includes(cookieName + "="))
-    ?.split("=")[1];
+    ?.replace(cookieName+"=", "");
 };
