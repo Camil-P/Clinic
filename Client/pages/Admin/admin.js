@@ -70,3 +70,40 @@ function createDynamicTable(listDoctors) {
   });
 }
 createDynamicTable(listDoctors);
+
+//Created user from Role
+
+const form = document.getElementById("registerFromAdmin");
+form.addEventListener(
+  "submit",
+  async (event) => {
+    event.preventDefault();
+    const formData = new FormData(form);
+    const reqData = {};
+    for (var [key, value] of formData.entries()) {
+      reqData[key] = value;
+    }
+    res = await axios
+      .post(
+        "http://localhost/Clinic/Api/controllers/AdminController.php",
+        JSON.stringify(reqData),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res)
+        alert("You have successfully created an account");
+        // window.location.href = "http://127.0.0.1:5500/Client/index.html";
+      })
+      .catch((err) => {
+        const messageErr = err.response.data.messages
+        
+        alert(`Creating not successfully:  ${messageErr}`);
+      });
+  },
+  false
+);
+

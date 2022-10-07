@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="../../style.css" />
     <link rel="stylesheet" href="./admin.css" />
     <script src="https://kit.fontawesome.com/c4254e24a8.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 
   </head>
   <body>
@@ -35,7 +37,7 @@
     <section class="container-register-doctor">
     <div class="form-doctor">
       <div class="form-doctor-register">
-        <form id="registerForm">
+        <form id="registerFromAdmin">
           <h1>Register user</h1>
           <label for="name">Name:</label>
           <input value="Dzelal" id="name" type="text" name="name" placeholder="Example: Mark ">
@@ -56,8 +58,8 @@
           <!-- <label for="repeat_password">Repeat password:</label>
           <input id="repeat_password" type="password" name="repeat_password" placeholder="*******"> -->
     
-          <label for="birthPlace">Chose country:</label>t
-          <input value="Serbia" list="birthPlace" name="birthPlace" class="datalist-input" />
+          <label for="birthPlace">Chose country:</label>
+          <input type="text" value="Serbia" list="birthPlace" name="birthPlace" />
           <datalist id="birthPlace">
             <option value="Srbija" />
             <option value="Hrvatska" />
@@ -65,15 +67,23 @@
             <option value="Bosna i Hercegovina" />
             <option value="Albanija" />
           </datalist>
-    
           <label for="phoneNumber">Number phone:</label>
           <input value="06632432" id="phoneNumber" type="text" name="phoneNumber" placeholder="+38#####">
     
           <label for="country">Chose gander:</label>
-          <input value="Male" list="gender" name="gender" class="datalist-input" />
+          <input type="text" value="Male" list="gender" name="gender" />
           <datalist id="gender">
             <option value="Male" />
             <option value="Female" />
+          </datalist>
+
+          <label for="role">Chose role:</label>
+          <input type="text" list="role" name="role"  />
+          <datalist id="role">
+            <option value="Admin" />
+            <option value="Doctor" />
+            <option value="Patient" />
+
           </datalist>
     
           <input type="submit" value="Stash the file"></button>

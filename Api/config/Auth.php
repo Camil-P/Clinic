@@ -2,7 +2,8 @@
 
 function authorize($writeDB)
 {
-  if (!isset($_SERVER['HTTP_AUTHORIZATION']) || strlen($_SERVER['HTTP_AUTHORIZATION']) < 1) {
+  $headers = apache_request_headers();
+  if (!isset($headers['Authorization']) || strlen($headers['Authorization']) < 1) {
     $response = new Response(false, 401);
     $response->addMessage("Authorization is missing from the header.");
     $response->send();
@@ -11,7 +12,7 @@ function authorize($writeDB)
 
   try {
 
-    $accessToken = $_SERVER['HTTP_AUTHORIZATION'];
+    $accessToken = $headers['Authorization'];
 
     $query = $writeDB->prepare("SELECT 
                                 UserId,
@@ -45,7 +46,6 @@ function authorize($writeDB)
     }
 
     return $returnedUser;
-
   } catch (PDOException $ex) {
     $response = new Response(false, 500);
     $response->addMessage("There was an issue authenticating, please try again.");

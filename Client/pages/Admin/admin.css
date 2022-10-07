@@ -6,12 +6,12 @@ body {
 
 .form-doctor {
   width: 60%;
-  height: 800px;
+  top: 0px;
+  /* height: 800px; */
   background-color: #24262b;
   position: fixed;
   z-index: 1;
   left: 350px;
-  top: 100px;
   border: 1px solid greenyellow;
   border-radius: 10px;
 }
