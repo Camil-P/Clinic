@@ -11,6 +11,9 @@ require_once('CM00005.php');
 require_once('CM00006.php');
 require_once('CM00007.php');
 require_once('CM00008.php');
+require_once('CM00009.php');
+require_once('CM00010.php');
+require_once('CM00011.php');
 
 if ($_GET['username'] === 'clinic' && $_GET['password'] === 'clinic') {
 
