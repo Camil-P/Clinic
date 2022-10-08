@@ -9,5 +9,6 @@ $CM00001 = "CREATE TABLE `clinic`.`appointment` (
     `StartingHour` int(11) NOT NULL,
     `PatientId` int(11) NOT NULL,
     `DoctorId` int(11) NOT NULL,
+    `Note` VARCHAR(255) NULL,
     PRIMARY KEY (Id)
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
