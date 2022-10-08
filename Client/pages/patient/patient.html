@@ -35,6 +35,7 @@
       </ul>
     </div>
   </header>
+
   <section class="container-modal">
     <div class="modal-profile">
       <div class="container-info">
@@ -53,81 +54,51 @@
       <button id="close-modal">Close</button>
     </div>
   </section>
+
+  <section id="appointments">
+    <form id="createAppointment" style="background-color: #24262b;">
+      <h1 style="color: white">Create an appointment</h1>
+      <label for="serviceName">Service Name:</label><br>
+      <select name="serviceName" id="serviceName" required >
+        <option value="Traumatic pathology">Traumatic pathology</option>
+        <option value="Static pathology">Static pathology</option>
+        <option value="Osteotomy of the femur and tibia">Osteotomy of the femur and tibia</option>
+        <option value="Complex ligamentous injuries">Complex ligamentous injuries</option>
+        <option value="Treatment of shoulder instability and rotator cuff pathology">Treatment of shoulder instability and rotator cuff pathology.</option>
+        <option value="Tendinopathy in athletes and muscle injuries">Tendinopathy in athletes and muscle injuries</option>
+        <option value="Primary knee prostheses">Primary knee prostheses</option>
+        <option value="Primary hip prostheses">Primary hip prostheses</option>
+      </select>
+      
+      <label for="date">Date:</label><br>
+      <input onchange="handleDateChange(this)" id="date" name="date" type="date" required style="width: 400px; height: 40px;" ><br>
+
+      <label for="startingHour">Starting Hour:</label><br>
+      <select name="startingHour" id="startingHour" required >
+        <!-- <option value="8">8</option>
+        <option value="9" disabled>9</option>
+        <option value="10">10</option>
+        <option value="11"  disabled>11</option>
+        <option value="12">12</option>
+        <option value="13">13</option>
+        <option value="14">14</option>
+        <option value="15">15</option> -->
+      </select>
+
+      <label for="note">Note:</label><br>
+      <textarea id="note" name="note" style="width: 400px; height: 150px;"></textarea><br>
+
+      <button type="submit" class="header-button" style="width: 100px; height: 40px; margin-left: 150px">Submit</button>
+    </form>
+  </section>
+
+
+
+  <section id="doctors-container">
+    <!-- dynamic creating doctor card -->
+  </section>
+
   <div class="patient-container">
-    <section id="doctors-container">
-      <div class="doctors-card">
-        <div class="doctors-image">
-          <div class="image-doctors">
-            <img class="img-doctor"
-              src="https://cdn-prod.medicalnewstoday.com/content/images/articles/317/317991/doctor-in-branding-article.jpg"
-              alt="doctors-card" />
-          </div>
-        </div>
-        <div class="doctors-info">
-          <div class="doctors-info-container">
-            <h2>Doctor Name: Name Surname</h2>
-            <h2>Email: example@example.eu</h2>
-            <h2>Specialty: Psychology</h2>
-            <h2>Experience: 3 years</h2>
-            <h2>Language: English</h2>
-          </div>
-        </div>
-        <div class="doctors-select">
-          <div class="button-container">
-            <button class="btn-doctor">Your selected doctor</button>
-            <button class="btn-doctor">Send message</button>
-          </div>
-        </div>
-      </div>
-      <div class="doctors-card">
-        <div class="doctors-image">
-          <div class="image-doctors">
-            <img class="img-doctor"
-              src="https://cdn-prod.medicalnewstoday.com/content/images/articles/317/317991/doctor-in-branding-article.jpg"
-              alt="doctors-card" />
-          </div>
-        </div>
-        <div class="doctors-info">
-          <div class="doctors-info-container">
-            <h2>Doctor Name: Name Surname</h2>
-            <h2>Email: example@example.eu</h2>
-            <h2>Specialty: Psychology</h2>
-            <h2>Experience: 3 years</h2>
-            <h2>Language: English</h2>
-          </div>
-        </div>
-        <div class="doctors-select">
-          <div class="button-container">
-            <button class="btn-doctor">Your selected doctor</button>
-            <button class="btn-doctor">Send message</button>
-          </div>
-        </div>
-      </div>
-      <div class="doctors-card">
-        <div class="doctors-image">
-          <div class="image-doctors">
-            <img class="img-doctor"
-              src="https://cdn-prod.medicalnewstoday.com/content/images/articles/317/317991/doctor-in-branding-article.jpg"
-              alt="doctors-card" />
-          </div>
-        </div>
-        <div class="doctors-info">
-          <div class="doctors-info-container">
-            <h2>Doctor Name: Name Surname</h2>
-            <h2>Email: example@example.eu</h2>
-            <h2>Specialty: Psychology</h2>
-            <h2>Experience: 3 years</h2>
-            <h2>Language: English</h2>
-          </div>
-        </div>
-        <div class="doctors-select">
-          <div class="button-container">
-            <button class="btn-doctor">Your selected doctor</button>
-            <button class="btn-doctor">Send message</button>
-          </div>
-        </div>
-      </div>
-    </section>
     <footer class="footer">
       <div class="footer-col">
         <h4>Kompanija</h4>

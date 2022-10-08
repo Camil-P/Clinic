@@ -63,26 +63,44 @@ class CreateUser
         }
         $this->setPassword($reqBody->password);
 
-        if ($this->userAlreadyExists($writeDB, $this->getEmail(), $this->getJmbg())) {
-            throw new UserException("User or doctor already created for the given email or JMBG.");
-        }
-
+        $this->userAlreadyExists($writeDB, $this->getEmail(), $this->getJmbg(), $this->getPhoneNumber());
+        
         $this->setRole($writeDB, $role);
     }
-
-    private function userAlreadyExists($writeDB, $email, $jmbg)
+    
+    private function userAlreadyExists($writeDB, $email, $jmbg, $phoneNumber)
     {
         try {
             $query = $writeDB->prepare("SELECT *
                                         FROM user
-                                        WHERE Email = '$email' OR JMBG = '$jmbg';");
+                                        WHERE Email = '$email'");
+            $query->execute();
+            
+            $rowCount = $query->rowCount();
+            if ($rowCount !== 0) {
+                throw new UserException("User or doctor already created for the given email.");
+            }
+
+            $query = $writeDB->prepare("SELECT *
+                                        FROM user
+                                        WHERE JMBG = '$jmbg'");
             $query->execute();
 
             $rowCount = $query->rowCount();
-            if ($rowCount === 0) {
-                return false;
+            if ($rowCount !== 0) {
+                throw new UserException("User or doctor already created for the given JMBG.");
             }
-            return true;
+
+            $query = $writeDB->prepare("SELECT *
+                                        FROM user
+                                        WHERE JMBG = '$phoneNumber'");
+            $query->execute();
+
+            $rowCount = $query->rowCount();
+            if ($rowCount !== 0) {
+                throw new UserException("User or doctor already created for the given phone number.");
+            }
+            
         } catch (PDOException $ex) {
             $response = new Response(false, 500);
             $response->addMessage("Unable to check if user already exists. " . $ex->getMessage());

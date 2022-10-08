@@ -1,4 +1,10 @@
-const token = getCookie('accessToken');
+var dateFormField = document.getElementById("date");
+dateFormField.value = formatDate(new Date());
+const startingHourFormField = document.getElementById("startingHour");
+
+const token = getCookie("accessToken");
+
+let appointments = [];
 
 const fetchDoctors = () => {
   axios
@@ -12,19 +18,73 @@ const fetchDoctors = () => {
     )
     .then((res) => {
       console.log(res);
-      alert("You have successfully created an account");
+      const doctorsList = res.data.data;
+      createDoctorsList(doctorsList)
     })
-    .catch(({ response }) => {
-      console.log(response);
-      alert(response);
+    .catch((err) => {
+      // console.log(err);
+      // alert(err);
       // throw err;
     });
 };
 
+
+
+function createDoctorsList(listDoctors) {
+  const doctorContainer = document.getElementById("doctors-container");
+  
+  listDoctors.forEach((doctor) => {
+    doctorContainer.innerHTML += `<div class="doctors-card">
+    <div class="doctors-image">
+      <div class="image-doctors">
+        <img class="img-doctor"
+          src="https://cdn-prod.medicalnewstoday.com/content/images/articles/317/317991/doctor-in-branding-article.jpg"
+          alt="doctors-card" />
+      </div>
+    </div>
+    <div class="doctors-info">
+      <div class="doctors-info-container">
+        <h2>Doctor Name: ${doctor.name}</h2>
+        <h2>Surname:${doctor.surname }</h2>
+        <h2>Email: ${doctor.email} </h2>
+        <h2>Gender:${doctor.gender}</h2>
+        <h2>Phone number:${doctor.phoneNumber}</h2>
+        <h2>Birth Place: ${doctor.birthPlace}</h2>
+      </div>
+    </div>
+    <div class="doctors-select">
+      <div class="button-container">
+        <button class="btn-doctor">Your selected doctor</button>
+        <button class="btn-doctor">Send message</button>
+      </div>
+    </div>
+    </div>`;
+  });
+}
+
 fetchDoctors();
 
+const fetchAppointments = () => {
+  axios
+    .get("http://localhost/Clinic/Api/controllers/AppointmentController.php", {
+      headers: {
+        Authorization: token,
+      },
+    })
+    .then(({ data }) => {
+      appointments = data.data;
+      console.log(appointments);
+      displayStartingHours(dateFormField.value);
+    })
+    .catch(({ response }) => {
+      console.log(response.data);
+      alert(response.data.messages[0]);
+    });
+};
+
+fetchAppointments();
+
 const logoutBtn = document.querySelector("#logout-patient");
-console.log(logoutBtn);
 
 logoutBtn?.addEventListener("click", (el) => {
   el.preventDefault();
@@ -37,7 +97,6 @@ logoutBtn?.addEventListener("click", (el) => {
 const modalProfile = document.getElementsByClassName("modal-profile")[0];
 const btn_profile = document.getElementById("profile-btn");
 const btnClose = document.getElementById("close-modal");
-console.log(modalProfile, btn_profile);
 
 btn_profile.addEventListener("click", (el) => {
   modalProfile.style.display = "block";
@@ -46,3 +105,63 @@ btn_profile.addEventListener("click", (el) => {
 btnClose.addEventListener("click", () => {
   modalProfile.style.display = "none";
 });
+
+const form = document.getElementById("createAppointment");
+form.addEventListener(
+  "submit",
+  async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(form);
+    const reqData = {};
+    for (var [key, value] of formData.entries()) {
+      reqData[key] = key === "startingHour" ? parseInt(value) : value;
+    }
+
+    res = await axios
+      .post(
+        "http://localhost/Clinic/Api/controllers/AppointmentController.php",
+        JSON.stringify(reqData),
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+          },
+        }
+      )
+      .then(({ data }) => {
+        alert("Appointment created successfully.");
+        window.location.reload();
+      })
+      .catch(({ response }) => {
+        alert(response.data.messages[0]);
+      });
+  },
+  false
+);
+
+const handleDateChange = (dateEl) => {
+  console.log(dateEl.value);
+  displayStartingHours(dateEl.value);
+};
+
+const displayStartingHours = (date) => {
+  startingHourFormField.innerHTML = "";
+
+  let appointmentStartingHours = appointments
+    .filter((a) => a.date === date.toString())
+    .map((a) => a.startingHour);
+
+  for (let i = 8; i < 16; i++) {
+    const optionEl = document.createElement('option');
+    optionEl.value = i;
+    if (appointmentStartingHours.includes(i)){
+      optionEl.innerHTML = i + " Already appointed";
+      optionEl.disabled = true;
+    }
+    else{
+      optionEl.innerHTML = i;
+    }
+      startingHourFormField.appendChild(optionEl);
+  }
+};
