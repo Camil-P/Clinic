@@ -29,7 +29,7 @@
 }
 
 .img-doctor {
-  width: 100%;
+  width: 80%;
   height: 80%;
   border-radius: 10px;
 }
@@ -43,6 +43,7 @@
 }
 
 .doctors-info-container h2 {
+  margin: 6px;
   font-weight: 100;
   color: white;
   text-decoration: underline greenyellow;
