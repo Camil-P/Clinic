@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="../../resources/footer.css">
     <link rel="stylesheet" href="../../resources/header/header.css">
     <link rel="stylesheet" href="../../pages/Doctor/doctor.css">
+    <script src="https://kit.fontawesome.com/c4254e24a8.js" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
@@ -23,11 +25,8 @@
         </a>
         <div id="header-navbar-links" class="inactive">
             <ul>
-                <li><a href="#slideshow-container">Home</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#testimonials">Testimonials</a></li>
-                <li><a href="./pages/login/login.html" id="login" class="header-button">Login</a></li>
-                <li><a href="./pages/register/register.html" id="register" class="header-button">Register</a></li>
+                <li><a href="">Doctor</a></li>
+                <li><a id="logout-doctor" class="header-button">Logout</a></li>
             </ul>
         </div>
     </header>
@@ -39,8 +38,8 @@
                     <img class="doctors-image" src="https://cdn-icons-png.flaticon.com/512/194/194915.png" />
                 </div>
             </div> -->
-            <div>
-                <label for="cars">Options:</label>
+            <div id="options-data">
+                <label for="cars"></label>
                 <select onchange="onSelectChange()" id="select_id">
                     <option value="appointments-content">Appointments</option>
                     <option value="patient-content">Patients</option>
@@ -50,7 +49,40 @@
 
             <div id="container-content">
                 <div id="patient-content">
-                    Patient Content
+                    <table id="table-patients">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Surname</th>
+                                <th>Email</th>
+                                <th>Phone Number</th>
+                            </tr>
+                        </thead>
+                        <!-- <tr>
+                            <td>Nikola</td>
+                            <td>Glisovic</td>
+                            <td>dzoniblejz2@gmail.com</td>
+                            <td>0666406404</td>
+                        </tr> -->
+                        <!-- <tr>
+                            <td>Nikola</td>
+                            <td>Glisovic</td>
+                            <td>dzoniblejz2@gmail.com</td>
+                            <td>0666406404</td>
+                        </tr>
+                        <tr>
+                            <td>Nikola</td>
+                            <td>Glisovic</td>
+                            <td>dzoniblejz2@gmail.com</td>
+                            <td>0666406404</td>
+                        </tr>
+                        <tr>
+                            <td>Nikola</td>
+                            <td>Glisovic</td>
+                            <td>dzoniblejz2@gmail.com</td>
+                            <td>0666406404</td>
+                        </tr> -->
+                    </table>
                 </div>
                 <div id="appointments-content">
                     Appointments Content
