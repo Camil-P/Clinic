@@ -13,8 +13,9 @@ class Appointment
     private $_startingHour;
     private $_patientId;
     private $_doctorId;
+    private $_note;
 
-    public function __construct($id, $serviceName, $date, $hour, $patientId, $doctorId)
+    public function __construct($id, $serviceName, $date, $hour, $patientId, $doctorId, $note)
     {
         $this->setId($id);
         $this->setServiceName($serviceName);
@@ -23,6 +24,7 @@ class Appointment
         $this->setCompletionStatus();
         $this->setPatientId($patientId);
         $this->setDoctorId($doctorId);
+        $this->setNote($note);
     }
 
     public function asArray()
@@ -35,6 +37,7 @@ class Appointment
         $appointment["startingHour"] = $this->getStartingHour();
         $appointment["patientId"] = $this->getPatientId();
         $appointment["doctorId"] = $this->getDoctorID();
+        $appointment["note"] = $this->getNote();
 
         return $appointment;
     }
@@ -74,6 +77,10 @@ class Appointment
     public function getDoctorID()
     {
         return $this->_doctorId;
+    }
+
+    public function getNote(){
+        return $this->_note;
     }
 
     // SETTERS WITH VALIDATION
@@ -161,5 +168,9 @@ class Appointment
         }
 
         $this->_doctorId = $doctorId;
+    }
+
+    public function setNote($note){
+        $this->_note = $note;
     }
 }

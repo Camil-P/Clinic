@@ -54,3 +54,13 @@ const getCookie = (cookieName) => {
     .find((row) => row.includes(cookieName + "="))
     ?.replace(cookieName+"=", "");
 };
+
+const formatDate = (dateObj) => {
+let month = dateObj.getUTCMonth() + 1; //months from 1-12
+month = month.toString().length > 1 ? month : "0"+month;
+let day = dateObj.getUTCDate();
+day = day.toString().length > 1 ? day : "0"+day;
+let year = dateObj.getUTCFullYear();
+
+return year + "-" + month + "-" + day;
+};

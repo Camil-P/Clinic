@@ -64,7 +64,8 @@ if (!array_key_exists('appointmentId', $_GET) && $_SERVER['REQUEST_METHOD'] === 
                                     Date,
                                     StartingHour,
                                     PatientId,
-                                    DoctorId
+                                    DoctorId,
+                                    Note
                                 FROM appointment
                                 WHERE 
                                     DoctorId = :doctorId
@@ -83,7 +84,7 @@ if (!array_key_exists('appointmentId', $_GET) && $_SERVER['REQUEST_METHOD'] === 
         }
 
         while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-            $appointment = new Appointment($row['Id'], $row["ServiceName"], $row['Date'], $row['StartingHour'], $row['PatientId'], $row['DoctorId']);
+            $appointment = new Appointment($row['Id'], $row["ServiceName"], $row['Date'], $row['StartingHour'], $row['PatientId'], $row['DoctorId'], $row['Note']);
             $appointmentArray[] = $appointment->asArray();
         }
 
@@ -127,7 +128,8 @@ elseif (array_key_exists('appointmentId', $_GET) && ($_SERVER['REQUEST_METHOD'] 
                                                 Date,
                                                 StartingHour,
                                                 PatientId,
-                                                DoctorId
+                                                DoctorId,
+                                                Note
                                             FROM appointment
                                             WHERE 
                                                 Id = :appointmentId AND
@@ -147,7 +149,7 @@ elseif (array_key_exists('appointmentId', $_GET) && ($_SERVER['REQUEST_METHOD'] 
                 }
 
                 while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-                    $appointment = new Appointment($row['Id'], $row["ServiceName"], $row['Date'], $row['StartingHour'], $row['PatientId'], $row['DoctorId']);
+                    $appointment = new Appointment($row['Id'], $row["ServiceName"], $row['Date'], $row['StartingHour'], $row['PatientId'], $row['DoctorId'], $row['Note']);
                     $appointmentArray = $appointment->asArray();
                 }
 
@@ -256,13 +258,15 @@ elseif (empty($_GET)) {
                                             Date, 
                                             StartingHour, 
                                             PatientId, 
-                                            DoctorId) 
+                                            DoctorId,
+                                            Note) 
                                         values (
                                            '{$createAppointment->getServiceName()}',
                                            '{$createAppointment->getDate()}',
                                             {$createAppointment->getStartingHour()},
                                             {$createAppointment->getPatientId()},
-                                            {$createAppointment->getDoctorId()});");
+                                            {$createAppointment->getDoctorId()},
+                                            '{$createAppointment->getNote()}');");
             $query->execute();
 
             $rowCount = $query->rowCount();
@@ -290,7 +294,7 @@ elseif (empty($_GET)) {
             }
 
             while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-                $appointment = new Appointment($row['Id'], $row["ServiceName"], $row['Date'], $row['StartingHour'], $row['PatientId'], $row['DoctorId']);
+                $appointment = new Appointment($row['Id'], $row["ServiceName"], $row['Date'], $row['StartingHour'], $row['PatientId'], $row['DoctorId'], $row['Note']);
                 $appointmentArray = $appointment->asArray();
             }
 
