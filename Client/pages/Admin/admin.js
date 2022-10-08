@@ -24,27 +24,6 @@ btnClose.addEventListener("click", () => {
 
 //create dynamic table for doctors !!! ADMIN PAGE
 
-const listDoctors = [
-  {
-    name: "Milos",
-    surname: "Zukin",
-    email: "Dentist",
-    phonenumber: "9482428",
-  },
-  {
-    name: "Milos",
-    surname: "Zukin",
-    email: "Dentist",
-    phonenumber: "9482428",
-  },
-  {
-    name: "Milos",
-    surname: "Zukin",
-    email: "Dentist",
-    phonenumber: "9482428",
-  },
-];
-
 const tableHeaders = document.getElementsByTagName("tbody")[0];
 
 function createDynamicTable(listDoctors) {
@@ -63,10 +42,10 @@ function createDynamicTable(listDoctors) {
     tdName.innerHTML = doctor.name;
     tdSurname.innerHTML = doctor.surname;
     tdEmail.innerHTML = doctor.email;
-    tdPhoneNumber.innerHTML = doctor.phonenumber;
+    tdPhoneNumber.innerHTML = doctor.phoneNumber;
   });
 }
-createDynamicTable(listDoctors);
+// createDynamicTable(listDoctors);
 
 //Created user from Role
 const token = getCookie('accessToken');
@@ -76,7 +55,6 @@ form.addEventListener(
   "submit",
   async (event) => {
     event.preventDefault();
-    console.log(token)
     const formData = new FormData(form);
     const reqData = {};
     for (var [key, value] of formData.entries()) {
@@ -112,3 +90,30 @@ form.addEventListener(
   false
 );
 
+
+const fetchDoctors = () => {
+  console.log(token)
+  axios
+    .get(
+      "http://localhost/Clinic/Api/controllers/AdminController.php?fetch=doctors",
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    )
+    .then((res) => {
+      console.log(res);
+      const doctorsList = res.data.data;
+      console.log(doctorsList)
+      createDynamicTable(doctorsList)
+    })
+    .catch((err) => {
+      console.log(err);
+      // alert(err);
+      // throw err;
+    });
+};
+
+
+fetchDoctors();
