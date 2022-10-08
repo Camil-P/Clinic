@@ -9,6 +9,7 @@ class CreateAppointment
     private $_startingHour;
     private $_patientId;
     private $_doctorId;
+    private $_note;
 
     public function __construct($writeDB, $reqBody)
     {
@@ -33,6 +34,7 @@ class CreateAppointment
         $this->setStartingHour($reqBody->startingHour);
         $this->setPatientId($reqBody->patientId);
         $this->setDoctorId($reqBody->doctorId);
+        $this->setNote($reqBody->note);
         
         if ($this->appointmentAlreadyExists($writeDB, $this->getDate(), $this->getStartingHour(), $this->getPatientId(), $this->getDoctorID())) {
             throw new AppointmentException("User or doctor already has an appointment for the requested time.");
@@ -151,6 +153,10 @@ class CreateAppointment
         $this->_doctorId = $doctorId;
     }
 
+    public function setNote($note){
+        $this->_note = $note;
+    }
+
     // GETTERS
 
     public function getServiceName()
@@ -176,5 +182,9 @@ class CreateAppointment
     public function getDoctorId()
     {
         return $this->_doctorId;
+    }
+
+    public function getNote(){
+        return $this->_note;
     }
 }
