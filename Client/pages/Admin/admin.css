@@ -70,9 +70,11 @@ h1 {
 .table,
 th,
 td {
-  border: 1px solid black;
+  border: 1px solid greenyellow;
   width: 350px;
   height: 50px;
+  color: black;
+  font-size: 28px;
 }
 
 .table td {
@@ -90,6 +92,7 @@ td {
   height: 300px;
 }
 .table-request {
+  background-color: #525652;
   width: 100%;
   display: flex;
   justify-content: center;
