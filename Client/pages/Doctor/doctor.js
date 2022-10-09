@@ -59,6 +59,29 @@ const mockedData = [
 		phoneNumber: 0666406404,
 	},
 ];
+const mockedAppointedUser = [
+	{
+		patient: "Demir Erovic",
+		status: "Consultation",
+		appointmentDate: "10-10-2022",
+		doctor: "Sabir Sagdati",
+		actions: { 1: "Further analysis", 2: "Send message" },
+	},
+	{
+		patient: "Demir Erovic",
+		status: "Consultation",
+		appointmentDate: "10-10-2022",
+		doctor: "Sabir Sagdati",
+		actions: { 1: "Further analysis", 2: "Send message" },
+	},
+	{
+		patient: "Demir Erovic",
+		status: "Consultation",
+		appointmentDate: "10-10-2022",
+		doctor: "Sabir Sagdati",
+		actions: { 1: "Further analysis", 2: "Send message" },
+	},
+];
 
 const table = document.getElementById("table-patients");
 function createTableData() {
@@ -80,3 +103,19 @@ btnLogout.addEventListener("click", () => {
 	deleteCookie("role");
 	window.location.reload();
 });
+
+const appointmentTable = document.getElementById("appointment-table");
+function createAppointmentTable() {
+	mockedAppointedUser.forEach((e) => {
+		appointmentTable.innerHTML += `<tbody>
+		<tr>
+			<td>${e.patient}</td>
+			<td>${e.status}</td>
+			<td>${e.appointmentDate}</td>
+			<td>${e.doctor}</td>
+			<td>${e.actions[1]}</td>
+		</tr>
+	</tbody>`;
+	});
+}
+createAppointmentTable();
