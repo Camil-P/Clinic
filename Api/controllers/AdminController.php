@@ -274,7 +274,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
                     }
 
                     while ($requestRow = $requestQuery->fetch(PDO::FETCH_ASSOC)) {
-                        $patientAsArray['requests'][] = $requestRow;
+                        $patientAsArray['requests'] = $requestRow;
                     }
 
                     $patientsArray[] = $patientAsArray;
