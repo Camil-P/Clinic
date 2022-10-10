@@ -74,8 +74,8 @@ form.addEventListener(
       .then((res) => {
         console.log(res)
         alert("You have successfully created an account");
+        window.location.reload();
         modalProfile.style.display = "none";
-        // window.location.href = "http://127.0.0.1:5500/Client/index.html";
       })
       .catch(({response}) => {
         console.log(response)

@@ -1,7 +1,8 @@
 <?php
+
 header('Access-Control-Allow-Methods: *');
-header('Access-Control-Allow-Headers: Content-Type');
-header('Access-Control-Max-Age: 86400');
+header('Access-Control-Allow-Headers: Content-Type, Authorization');
+// header('Access-Control-Max-Age: 86400');
 header('Access-Control-Allow-Origin: *');
 
 require_once("../config/Database.php");
@@ -49,8 +50,7 @@ if ($authorizedUser['role'] === 'Patient') {
 
     $patientId = $row['Id'];
     $doctorId = $row['DoctorId'];
-}
-else{
+} else {
     $doctorId = $authorizedUser['id'];
 }
 
@@ -243,8 +243,7 @@ elseif (empty($_GET)) {
                 $jsonData['patientId'] = $patientId;
                 $jsonData['doctorId'] = $doctorId;
                 $jsonData = (object)$jsonData;
-            }
-            else{
+            } else {
                 $jsonData = (array)$jsonData;
                 $jsonData['doctorId'] = $doctorId;
                 $jsonData = (object)$jsonData;
