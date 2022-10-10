@@ -47,12 +47,14 @@
               alt="patient"
             />
           </div>
-          <div class="text-info">
-            <h2>Name: Mark</h2>
-            <h2>Surname: Mark</h2>
-            <h2>Email: Mark</h2>
-            <h2>Age: Mark</h2>
-            <h2>Your Doctor: Mark</h2>
+          <div id="profileInfoData" class="text-info">
+            <h2 id="profileName">Name: </h2>
+            <h2 id="profileSurname">Surname: </h2>
+            <h2 id="profileEmail">Email: </h2>
+            <h2 id="profileBirthDate">Birth Date: </h2>
+            <h2 id="profileBirthPlace">Birth Place: </h2>
+            <h2 id="profilePhoneNumber">Phone Number: </h2>
+            <h2 id="profileGender">Gender: </h2>
           </div>
         </div>
         <button id="close-modal">Close</button>
@@ -60,6 +62,11 @@
     </section>
 
     <section id="appointments">
+
+      <div id="upcomingAppointments">
+        
+      </div>
+
       <div class="appointment-container">
 
         <form id="createAppointment" style="background-color: #24262b">
@@ -101,16 +108,7 @@
           /><br />
 
           <label for="startingHour">Starting Hour:</label><br />
-          <select name="startingHour" id="startingHour" required>
-            <!-- <option value="8">8</option>
-        <option value="9" disabled>9</option>
-        <option value="10">10</option>
-        <option value="11"  disabled>11</option>
-        <option value="12">12</option>
-        <option value="13">13</option>
-        <option value="14">14</option>
-        <option value="15">15</option> -->
-          </select>
+          <select name="startingHour" id="startingHour" required></select>
 
           <label for="note">Note:</label><br />
           <textarea
