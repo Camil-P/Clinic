@@ -83,6 +83,34 @@ const mockedAppointedUser = [
 	},
 ];
 
+const token = getCookie('accessToken');
+
+const getAppointments = async () => {
+	console.log(token)
+	res = await axios
+	  .get(
+		"http://localhost/Clinic/Api/controllers/AppointmentController.php",
+		{
+		  headers: {
+			Authorization: token,
+		  },
+		}
+	  )
+	  .then((res) => {
+		console.log(res);
+		const appointmentsRes = res.data.data;
+		createAppointmentTable(appointmentsRes)
+	  })
+	  .catch((err) => {
+		console.log(err);
+		
+	  });
+  };
+
+
+ getAppointments();
+
+
 const table = document.getElementById("table-patients");
 function createTableData() {
 	mockedData.forEach((e) => {
@@ -105,15 +133,19 @@ btnLogout.addEventListener("click", () => {
 });
 
 const appointmentTable = document.getElementById("appointment-table");
-function createAppointmentTable() {
-	mockedAppointedUser.forEach((e) => {
+function createAppointmentTable(appointmentsRes) {
+
+	// data,serviceName,startingHour,completionStatus
+	
+	appointmentsRes.forEach((e) => {
+		console.log(e,"SEFesvaesse")
 		appointmentTable.innerHTML += `<tbody>
 		<tr>
-			<td>${e.patient}</td>
-			<td>${e.status}</td>
-			<td>${e.appointmentDate}</td>
-			<td>${e.doctor}</td>
-			<td>${e.actions[1]}</td>
+			<td>${e.date}</td>
+			<td>${e.serviceName}</td>
+			<td>${e.startingHour}</td>
+			<td>${e.completionStatus}</td>
+			<td>${e.id}</td>
 		</tr>
 	</tbody>`;
 	});
