@@ -111,20 +111,13 @@ td {
 	flex: 1;
 	margin: 3% 100px 0 100px;
 	overflow-y: scroll;
-
 }
 
-.random_test {
-	background-color: black !important;
-}
 #patient-content {
 	display: none;
 }
-#appointments-content {
-	background-color: rgb(7, 151, 235);
-}
+
 #messages-content {
-	background-color: rgb(174, 245, 6);
 	display: none;
 }
 
@@ -139,3 +132,55 @@ td {
 	background-color: #009879;
 	color: white;
 }
+#appointment-table{
+	width: 100%;
+}
+
+#appointments-content {
+	background-color: #009879;
+}
+
+#messages-content {
+	margin: 0 auto;
+    max-width: 800px;
+    padding: 0 20px;
+	display: none;
+	flex-direction: column;
+}
+
+.container {
+	border: 2px solid #dedede;
+	background-color: #f1f1f1;
+	border-radius: 5px;
+	padding: 10px;
+	margin: 10px 0;
+  }
+.darker {
+	border-color: #ccc;
+	background-color: #ddd;
+  }
+.container::after {
+	content: "";
+	clear: both;
+	display: table;
+  }
+.container img {
+	float: left;
+	max-width: 60px;
+	width: 100%;
+	margin-right: 20px;
+	border-radius: 50%;
+  }
+.container img.right {
+	float: right;
+	margin-left: 20px;
+	margin-right:0;
+  }
+.time-right {
+	float: right;
+	color: #aaa;
+  }
+.time-left {
+	float: left;
+	color: #999;
+  }
