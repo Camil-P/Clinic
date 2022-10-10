@@ -17,14 +17,13 @@ const fetchDoctors = () => {
       }
     )
     .then((res) => {
-      console.log(res);
       const doctorsList = res.data.data;
-      createDoctorsList(doctorsList)
+      //sort by your selected doctor
+      const falseFirst = doctorsList.sort((a, b) => Number(b.assigned) - Number(a.assigned));
+      createDoctorsList(falseFirst)
     })
     .catch((err) => {
-      // console.log(err);
-      // alert(err);
-      // throw err;
+      console.log(err);
     });
 };
 
@@ -34,6 +33,7 @@ function createDoctorsList(listDoctors) {
   const doctorContainer = document.getElementById("doctors-container");
   
   listDoctors.forEach((doctor) => {
+    console.log(doctor)
     doctorContainer.innerHTML += `<div class="doctors-card">
     <div class="doctors-image">
       <div class="image-doctors">
@@ -54,7 +54,7 @@ function createDoctorsList(listDoctors) {
     </div>
     <div class="doctors-select">
       <div class="button-container">
-        <button class="btn-doctor">Your selected doctor</button>
+        <button class="${doctor.assigned === true ? 'btn-doctor' : 'btn-doctor-false'}">${doctor.assigned == true ? "Your selected doctor" : "Change your doctor"}</button>
         <button class="btn-doctor">Send message</button>
       </div>
     </div>
@@ -73,11 +73,11 @@ const fetchAppointments = () => {
     })
     .then(({ data }) => {
       appointments = data.data;
-      console.log(appointments);
+      console.log(appointments,"fetchAppRes");
       displayStartingHours(dateFormField.value);
     })
     .catch(({ response }) => {
-      console.log(response.data);
+      console.log(response.data,"fetchAppointments");
       alert(response.data.messages[0]);
     });
 };
@@ -118,7 +118,7 @@ form.addEventListener(
       reqData[key] = key === "startingHour" ? parseInt(value) : value;
     }
 
-    res = await axios
+  const  res = await axios
       .post(
         "http://localhost/Clinic/Api/controllers/AppointmentController.php",
         JSON.stringify(reqData),
@@ -129,20 +129,22 @@ form.addEventListener(
           },
         }
       )
-      .then(({ data }) => {
+      .then((res) => {
         alert("Appointment created successfully.");
         window.location.reload();
       })
-      .catch(({ response }) => {
-        alert(response.data.messages[0]);
+      .catch((err) => {
+        console.log(err)
+        alert(err);
       });
   },
   false
 );
 
 const handleDateChange = (dateEl) => {
-  console.log(dateEl.value);
-  displayStartingHours(dateEl.value);
+  const dateVal = dateEl.value
+  // console.log(dateEl.value);
+  displayStartingHours(dateVal);
 };
 
 const displayStartingHours = (date) => {
