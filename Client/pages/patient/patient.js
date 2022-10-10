@@ -54,7 +54,7 @@ function createDoctorsList(listDoctors) {
     </div>
     <div class="doctors-select">
       <div class="button-container">
-        <button class="${doctor.assigned === true ? 'btn-doctor' : 'btn-doctor-false'}">${doctor.assigned == true ? "Your selected doctor" : "Change your doctor"}</button>
+        <button ${doctor.assigned && "disabled"} class="${doctor.assigned  ? 'btn-doctor-false' : 'btn-doctor'}">${doctor.assigned  ? "Your selected doctor" : "Request to change your doctor"}</button>
         <button class="btn-doctor">Send message</button>
       </div>
     </div>
