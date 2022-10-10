@@ -351,6 +351,42 @@ switch ($_SERVER['REQUEST_METHOD']) {
         }
         break;
 
+    case 'DELETE':
+        if (array_key_exists('requestId', $_GET)) {
+            $requestId = $_GET['requestId'];
+            try {
+
+                $query = $writeDB->prepare("DELETE FROM assigndoctorrequest
+                                            WHERE Id = $requestId;");
+                $query->execute();
+
+                $rowCount = $query->rowCount();
+                if ($rowCount === 0) {
+                    $response = new Response(false, 404);
+                    $response->addMessage("Unsuccessfully canceled the doctor change request.");
+                    $response->send();
+                    exit();
+                }
+                
+                $response = new Response(true, 200);
+                $response->addMessage("Successfully canceled doctor change request.");
+                $response->send();
+                exit();
+            } catch (DoctorException $ex) {
+                $response = new Response(false, 400);
+                $response->addMessage($ex->getMessage());
+                $response->send();
+                exit();
+            } catch (PDOException $ex) {
+                $response = new Response(false, 500);
+                $response->addMessage("There was a problem with approving request from DB: \n" . $ex->getMessage());
+                $response->send();
+
+                error_log("DB error: " . $ex->getMessage(), 0);
+                exit();
+            }
+        }
+        break;
     default:
         $response = new Response(false, 404);
         $response->addMessage("Method not found");
