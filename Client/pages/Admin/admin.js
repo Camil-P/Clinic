@@ -24,12 +24,34 @@ btnClose.addEventListener("click", () => {
 
 //create dynamic table for doctors !!! ADMIN PAGE
 
-const tableHeaders = document.getElementsByTagName("tbody")[0];
+const tableHeaders = document.getElementById("doctorsTable");
+const tablePatientHeaders = document.getElementById("patientsTable");
+console.log(tablePatientHeaders);
 
 function createDynamicTable(listDoctors) {
   listDoctors.forEach((doctor) => {
     let tr = document.createElement("tr");
     tableHeaders.append(tr);
+
+    const tdName = document.createElement("td");
+    const tdSurname = document.createElement("td");
+    const tdEmail = document.createElement("td");
+    const tdPhoneNumber = document.createElement("td");
+    tr.append(tdName);
+    tr.append(tdSurname);
+    tr.append(tdEmail);
+    tr.append(tdPhoneNumber);
+    tdName.innerHTML = doctor.name;
+    tdSurname.innerHTML = doctor.surname;
+    tdEmail.innerHTML = doctor.email;
+    tdPhoneNumber.innerHTML = doctor.phoneNumber;
+  });
+}
+
+function createDynamicPatientTable(listPatients) {
+  listPatients.forEach((doctor) => {
+    let tr = document.createElement("tr");
+    tablePatientHeaders.append(tr);
 
     const tdName = document.createElement("td");
     const tdSurname = document.createElement("td");
@@ -117,3 +139,30 @@ const fetchDoctors = () => {
 
 
 fetchDoctors();
+
+const fetchPatients = () => {
+  console.log(token)
+  axios
+    .get(
+      "http://localhost/Clinic/Api/controllers/AdminController.php?fetch=patients",
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    )
+    .then((res) => {
+      console.log("patientRes: " + res);
+      const patientList = res.data.data;
+      console.log(patientList)
+      createDynamicPatientTable(patientList)
+    })
+    .catch((err) => {
+      console.log(err);
+      // alert(err);
+      // throw err;
+    });
+};
+
+
+fetchPatients();
