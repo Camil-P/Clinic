@@ -215,8 +215,7 @@ const displayStartingHours = (date) => {
 
 const displayUpcomingAppointments = (appointments) => {
   const upcomingAppointmentsContainer = document.getElementById("upcomingAppointments");
-  // filter(a => Date(a.date).getTime() >= new Date()
-  appointments.forEach(a => {
+  appointments.filter(a => new Date(a.date).getTime() >= new Date().getTime()).forEach(a => {
     upcomingAppointmentsContainer.innerHTML += `
     <div>
       <h1>${a.serviceName}</h1>
