@@ -185,3 +185,9 @@ td {
 	float: left;
 	color: #999;
   }
+
+
+  .cancel-app{
+	background-color: red;
+	cursor: pointer;
+  }
