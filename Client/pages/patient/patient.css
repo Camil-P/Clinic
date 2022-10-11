@@ -158,10 +158,30 @@
 #appointments {
   background-color: #24262b;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
 }
 
 .appointment-container{
   margin-left: 200px;
   width: 400px;
+}
+
+
+#upcomingAppointments {
+  margin-top: 70px;
+ width: 300px;
+ height: 400px;
+ overflow-y: scroll;
+}
+
+#upcomingAppointments button {
+  width: 80%;
+  background-color: rgb(198, 52, 52);
+  color: white;
+}
+
+#upcomingAppointments h1 {
+  font-weight: 100;
+  color: white;
+  font-size: 15px;
 }

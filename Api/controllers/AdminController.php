@@ -28,7 +28,7 @@ try {
 
 $authorizedUser = authorize($writeDB);
 
-if ($authorizedUser['role'] !== "Admin") {
+if ($authorizedUser['role'] !== "Admin" || $authorizedUser['role'] !== "Doctor" ) {
     $response = new Response(false, 401);
     $response->addMessage("You are not authorized");
     $response->send();
@@ -278,7 +278,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
                     $patientsArray[] = $patientAsArray;
                 }
 
-                $response->toCache(true);
+                // $response->toCache(true);
                 $response->setData($patientsArray);
                 $response->send();
                 exit();

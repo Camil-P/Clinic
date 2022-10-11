@@ -48,8 +48,11 @@ function createDynamicTable(listDoctors) {
   });
 }
 
-function createDynamicPatientTable(listPatients) {
-  listPatients.forEach((doctor) => {
+function createDynamicPatientTable(patientList) {
+  console.log(patientList, "Dwadwa");
+
+  patientList.forEach((patient) => {
+    console.log(patient);
     let tr = document.createElement("tr");
     tablePatientHeaders.append(tr);
 
@@ -57,20 +60,88 @@ function createDynamicPatientTable(listPatients) {
     const tdSurname = document.createElement("td");
     const tdEmail = document.createElement("td");
     const tdPhoneNumber = document.createElement("td");
+    const tdPatientID = document.createElement("td");
+    const submitReq = document.createElement("button");
+    const cancelReq = document.createElement("button");
+
+    // const tdReqDoctorID = document.createElement("td");
+
     tr.append(tdName);
     tr.append(tdSurname);
     tr.append(tdEmail);
     tr.append(tdPhoneNumber);
-    tdName.innerHTML = doctor.name;
-    tdSurname.innerHTML = doctor.surname;
-    tdEmail.innerHTML = doctor.email;
-    tdPhoneNumber.innerHTML = doctor.phoneNumber;
+    tr.append(tdPatientID);
+    // tr.append(tdReqDoctorID);
+    
+    tdName.innerHTML = patient.name;
+    tdSurname.innerHTML = patient.surname;
+    tdEmail.innerHTML = patient.email;
+    tdPhoneNumber.innerHTML = patient.phoneNumber;
+    if(patient.requests){
+      
+      tr.append(submitReq);
+      tr.append(cancelReq)
+      tdPatientID.innerHTML = `PatientID: ${patient.requests.PatientId}  PrevDoctor:${patient.requests.PreviouseDoctorId}  RequestDoctor:${patient.requests.RequestDoctorId}`
+      submitReq.innerHTML= "Approve"
+      cancelReq.innerHTML="Cancel"
+      cancelReq.classList.add("cancel-btn");
+      cancelReq.addEventListener('click',()=> {
+        console.log(patient.requests.Id)
+        axios.delete(
+          "http://localhost/Clinic/Api/controllers/AdminController.php?requestId="+patient.requests.Id,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res,"CAO")
+          alert("Requests approved");
+          window.location.reload();
+        })
+        .catch((err) => {
+          console.log(err)
+          alert(err);
+        });
+      })
+
+
+
+      submitReq.classList.add("approve-btn")
+
+      submitReq.addEventListener('click',()=> {
+        console.log(patient.requests.Id)
+        axios.patch(
+          "http://localhost/Clinic/Api/controllers/AdminController.php?requestId="+patient.requests.Id,null,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res,"CAO")
+          alert("Requests approved");
+          // window.location.reload();
+        })
+        .catch((err) => {
+          console.log(err)
+          alert(err);
+        });
+      })
+
+      //dwadwa
+    }
   });
+
+ 
+ 
 }
 // createDynamicTable(listDoctors);
 
 //Created user from Role
-const token = getCookie('accessToken');
+const token = getCookie("accessToken");
 
 const form = document.getElementById("registerFromAdmin");
 form.addEventListener(
@@ -88,23 +159,23 @@ form.addEventListener(
         JSON.stringify(reqData),
         {
           headers: {
-            "Authorization": token,
+            Authorization: token,
             "Content-Type": "application/json",
           },
         }
       )
       .then((res) => {
-        console.log(res)
+        console.log(res);
         alert("You have successfully created an account");
         window.location.reload();
         modalProfile.style.display = "none";
       })
-      .catch(({response}) => {
-        console.log(response)
+      .catch(({ response }) => {
+        console.log(response);
         // console.log(response.data);
         // alert(response.data.messages[0]);
         // const messageErr = err.response.data.messages
-        
+
         // alert(`Creating not successfully:  ${messageErr}`);
         // throw err;
       });
@@ -112,9 +183,8 @@ form.addEventListener(
   false
 );
 
-
 const fetchDoctors = () => {
-  console.log(token)
+  console.log(token);
   axios
     .get(
       "http://localhost/Clinic/Api/controllers/AdminController.php?fetch=doctors",
@@ -127,8 +197,8 @@ const fetchDoctors = () => {
     .then((res) => {
       console.log(res);
       const doctorsList = res.data.data;
-      console.log(doctorsList)
-      createDynamicTable(doctorsList)
+      console.log(doctorsList);
+      createDynamicTable(doctorsList);
     })
     .catch((err) => {
       console.log(err);
@@ -137,11 +207,10 @@ const fetchDoctors = () => {
     });
 };
 
-
 fetchDoctors();
 
 const fetchPatients = () => {
-  console.log(token)
+  console.log(token, "tu sma i ja");
   axios
     .get(
       "http://localhost/Clinic/Api/controllers/AdminController.php?fetch=patients",
@@ -154,8 +223,8 @@ const fetchPatients = () => {
     .then((res) => {
       console.log("patientRes: " + res);
       const patientList = res.data.data;
-      console.log(patientList)
-      createDynamicPatientTable(patientList)
+      console.log(patientList, "tuuu");
+      createDynamicPatientTable(patientList);
     })
     .catch((err) => {
       console.log(err);
@@ -164,5 +233,7 @@ const fetchPatients = () => {
     });
 };
 
-
 fetchPatients();
+
+
+
