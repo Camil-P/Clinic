@@ -12,7 +12,8 @@ form.addEventListener(
 
     res = await axios
       .post(
-        "http://localhost/Clinic/Api/controllers/SessionController.php",
+        // "http://localhost/Clinic/Api/controllers/SessionController.php",
+        SESSION_URL,
         JSON.stringify(reqData),
         {
           headers: {

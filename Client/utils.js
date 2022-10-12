@@ -16,6 +16,12 @@
 //     console.log(expireDate)
 //   console.log(document.cookie)
 // };
+const getCookie = (cookieName) => {
+  return document.cookie
+    .split(";")
+    .find((row) => row.includes(cookieName + "="))
+    ?.replace(cookieName+"=", "");
+};
 
 function setCookie(
   key,
@@ -48,12 +54,6 @@ function get_cookie(name) {
   });
 }
 
-const getCookie = (cookieName) => {
-  return document.cookie
-    .split(";")
-    .find((row) => row.includes(cookieName + "="))
-    ?.replace(cookieName+"=", "");
-};
 
 const formatDate = (dateObj) => {
 let month = dateObj.getUTCMonth() + 1; //months from 1-12
