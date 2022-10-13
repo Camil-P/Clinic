@@ -12,8 +12,7 @@ form.addEventListener(
 
     res = await axios
       .post(
-        // "http://localhost/Clinic/Api/controllers/SessionController.php",
-        SESSION_URL,
+        "http://localhost/Clinic/Api/controllers/SessionController.php",
         JSON.stringify(reqData),
         {
           headers: {
@@ -31,7 +30,7 @@ form.addEventListener(
         const origin = window.location.origin;
 
         setCookie("role", data?.data.role, data.data.accessTokenExpiresIn);
-        
+
         if (data.data.role === "Admin") {
           window.location.href =
           origin+"/pages/Admin/admin.html";
