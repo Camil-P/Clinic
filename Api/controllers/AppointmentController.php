@@ -1,9 +1,9 @@
 <?php
 
-header('Access-Control-Allow-Methods: *');
-header('Access-Control-Allow-Headers: Content-Type, Authorization');
+// header('Access-Control-Allow-Methods: *');
+// header('Access-Control-Allow-Headers: Content-Type, Authorization');
 // header('Access-Control-Max-Age: 86400');
-header('Access-Control-Allow-Origin: *');
+// header('Access-Control-Allow-Origin: *');
 
 require_once("../config/Database.php");
 require_once("../models/Appointment.php");
@@ -85,7 +85,11 @@ if (!array_key_exists('appointmentId', $_GET) && $_SERVER['REQUEST_METHOD'] === 
 
         while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
             $appointment = new Appointment($row['Id'], $row["ServiceName"], $row['Date'], $row['StartingHour'], $row['PatientId'], $row['DoctorId'], $row['Note']);
-            $appointmentArray[] = $appointment->asArray();
+            $appointmentAsArray = $appointment->asArray();
+            if ($authorizedUser['role'] === 'Patient'){
+                $appointmentAsArray['patientsAppointment'] = $row['PatientId'] === $patientId;
+            }
+            $appointmentArray[] = $appointmentAsArray;
         }
 
         $response = new Response(true, 200);
