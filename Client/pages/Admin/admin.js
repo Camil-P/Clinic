@@ -49,7 +49,6 @@ function createDynamicTable(listDoctors) {
 }
 
 function createDynamicPatientTable(patientList) {
-  console.log(patientList, "Dwadwa");
 
   patientList.forEach((patient) => {
     let tr = document.createElement("tr");
@@ -63,14 +62,12 @@ function createDynamicPatientTable(patientList) {
     const submitReq = document.createElement("button");
     const cancelReq = document.createElement("button");
 
-    // const tdReqDoctorID = document.createElement("td");
 
     tr.append(tdName);
     tr.append(tdSurname);
     tr.append(tdEmail);
     tr.append(tdPhoneNumber);
     tr.append(tdPatientID);
-    // tr.append(tdReqDoctorID);
     
     tdName.innerHTML = patient.name;
     tdSurname.innerHTML = patient.surname;
@@ -95,7 +92,6 @@ function createDynamicPatientTable(patientList) {
           }
         )
         .then((res) => {
-          console.log(res,"CAO")
           alert("Requests approved");
           window.location.reload();
         })
@@ -120,9 +116,8 @@ function createDynamicPatientTable(patientList) {
           }
         )
         .then((res) => {
-          console.log(res,"CAO")
           alert("Requests approved");
-          // window.location.reload();
+          window.location.reload();
         })
         .catch((err) => {
           console.log(err)
@@ -130,14 +125,12 @@ function createDynamicPatientTable(patientList) {
         });
       })
 
-      //dwadwa
     }
   });
 
  
  
 }
-// createDynamicTable(listDoctors);
 
 //Created user from Role
 const token = getCookie("accessToken");
@@ -172,12 +165,7 @@ form.addEventListener(
       .catch(({ response }) => {
         console.log(response.data.messages[0]);
         alert(response.data.messages[0]);
-        // console.log(response.data);
-        // alert(response.data.messages[0]);
-        // const messageErr = err.response.data.messages
-
-        // alert(`Creating not successfully:  ${messageErr}`);
-        // throw err;
+        
       });
   },
   false
@@ -201,8 +189,7 @@ const fetchDoctors = () => {
     })
     .catch((err) => {
       console.log(err);
-      // alert(err);
-      // throw err;
+      
     });
 };
 
@@ -223,9 +210,7 @@ const fetchPatients = () => {
       createDynamicPatientTable(patientList);
     })
     .catch(({ data }) => {
-      console.log(data.messages[0]);
-      // alert(err);
-      // throw err;
+      alert(data.messages[0]);
     });
 };
 

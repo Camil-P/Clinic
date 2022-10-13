@@ -17,14 +17,13 @@ const fetchDoctors = () => {
       }
     )
     .then((res) => {
-      console.log(res);
       const doctorsList = res.data.data;
       //sort by your selected doctor
       const falseFirst = doctorsList.sort((a, b) => Number(b.assigned) - Number(a.assigned));
       createDoctorsList(falseFirst)
     })
     .catch((err) => {
-      console.log(err);
+      alert(err);
     });
 };
 
@@ -74,7 +73,6 @@ const fetchAppointments = () => {
     })
     .then(({ data }) => {
       appointments = data.data;
-      console.log(appointments,"fetchAppRes");
       displayStartingHours(dateFormField.value);
       displayUpcomingAppointments(appointments);
     })
@@ -131,13 +129,13 @@ btn_profile.addEventListener("click", (el) => {
   )
   .then(({ data }) => {
     modalProfile.style.display = "block";
-    document.getElementById('profileName').innerHTML += data.data.name;
-    document.getElementById('profileSurname').innerHTML += data.data.surname;
-    document.getElementById('profileEmail').innerHTML += data.data.email;
-    document.getElementById('profileBirthDate').innerHTML += data.data.birthDate;
-    document.getElementById('profileBirthPlace').innerHTML += data.data.birthPlace;
-    document.getElementById('profilePhoneNumber').innerHTML += data.data.phoneNumber;
-    document.getElementById('profileGender').innerHTML += data.data.gender;
+    document.getElementById('profileName').innerHTML = data.data.name;
+    document.getElementById('profileSurname').innerHTML = data.data.surname;
+    document.getElementById('profileEmail').innerHTML = data.data.email;
+    document.getElementById('profileBirthDate').innerHTML = data.data.birthDate;
+    document.getElementById('profileBirthPlace').innerHTML = data.data.birthPlace;
+    document.getElementById('profilePhoneNumber').innerHTML = data.data.phoneNumber;
+    document.getElementById('profileGender').innerHTML = data.data.gender;
   })
   .catch((err) => {
     alert(err.response.data.messages[0]);
