@@ -12,7 +12,7 @@ form.addEventListener(
 
     res = await axios
       .post(
-        "http://localhost/Clinic/Api/controllers/SessionController.php",
+        SESSION_URL,
         JSON.stringify(reqData),
         {
           headers: {
@@ -43,7 +43,7 @@ form.addEventListener(
         }
       })
       .catch(({ response }) => {
-        console.log(response.data.messages[0]);
+        // console.log(response.data.messages[0]);
         alert(response.data.messages[0]);
       });
   },

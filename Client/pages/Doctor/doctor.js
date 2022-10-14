@@ -2,7 +2,7 @@ const token = getCookie('accessToken');
 
 const DoctorcancelAppointment = (id) => {
 	axios.delete(
-	  "http://localhost/Clinic/Api/controllers/AppointmentController.php?appointmentId="+id,
+	  APPOINTMENT_URL+"?appointmentId="+id,
 	  {
 		headers: {
 		  Authorization: token,
@@ -62,7 +62,7 @@ const getAppointments = async () => {
 	console.log(token)
 	res = await axios
 	  .get(
-		"http://localhost/Clinic/Api/controllers/AppointmentController.php",
+		APPOINTMENT_URL,
 		{
 		  headers: {
 			Authorization: token,
@@ -131,7 +131,7 @@ const fetchPatients = () => {
 	console.log(token, "tu sma i ja");
 	axios
 	  .get(
-		"http://localhost/Clinic/Api/controllers/DoctorController.php?fetch=patients",
+		DOCTOR_CONTROLER+"?fetch=patients",
 		{
 		  headers: {
 			Authorization: token,

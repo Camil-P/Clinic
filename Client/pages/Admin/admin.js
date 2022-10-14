@@ -5,7 +5,7 @@ logoutBtn?.addEventListener("click", (el) => {
 
   deleteCookie("accessToken");
   deleteCookie("role");
-  window.location.href = "http://127.0.0.1:5500/Client/index.html";
+  window.location.href = "/";
 });
 
 const modalProfile = document.getElementsByClassName(
@@ -84,7 +84,7 @@ function createDynamicPatientTable(patientList) {
       cancelReq.addEventListener('click',()=> {
         console.log(patient.requests.Id)
         axios.delete(
-          "http://localhost/Clinic/Api/controllers/AdminController.php?requestId="+patient.requests.Id,
+          ADMIN_CONTROLER +"?requestId="+patient.requests.Id,
           {
             headers: {
               Authorization: token,
@@ -108,7 +108,7 @@ function createDynamicPatientTable(patientList) {
       submitReq.addEventListener('click',()=> {
         console.log(patient.requests.Id)
         axios.patch(
-          "http://localhost/Clinic/Api/controllers/AdminController.php?requestId="+patient.requests.Id,null,
+          ADMIN_CONTROLER+"?requestId="+patient.requests.Id,null,
           {
             headers: {
               Authorization: token,
@@ -147,7 +147,7 @@ form.addEventListener(
     }
     await axios
       .post(
-        "http://localhost/Clinic/Api/controllers/AdminController.php",
+        ADMIN_CONTROLER,
         JSON.stringify(reqData),
         {
           headers: {
@@ -174,7 +174,7 @@ form.addEventListener(
 const fetchDoctors = () => {
   axios
     .get(
-      "http://localhost/Clinic/Api/controllers/AdminController.php?fetch=doctors",
+      ADMIN_CONTROLER+"?fetch=doctors",
       {
         headers: {
           Authorization: token,
@@ -198,7 +198,7 @@ fetchDoctors();
 const fetchPatients = () => {
   axios
     .get(
-      "http://localhost/Clinic/Api/controllers/AdminController.php?fetch=patients",
+      ADMIN_CONTROLER+"?fetch=patients",
       {
         headers: {
           Authorization: token,
