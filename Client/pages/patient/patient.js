@@ -9,7 +9,7 @@ let appointments = [];
 const fetchDoctors = () => {
   axios
     .get(
-      PATIENT_CONTROLER+"?fetch=doctors",
+      PATIENT_CONTROLLER+"?fetch=doctors",
       {
         headers: {
           Authorization: token,
@@ -85,7 +85,7 @@ fetchAppointments();
 
 const requestChange = (id) => {
   axios
-  .post(PATIENT_CONTROLER, 
+  .post(PATIENT_CONTROLLER, 
   JSON.stringify({ requestedDoctorsId: id }),
   {
     headers: {
@@ -120,7 +120,7 @@ const btnClose = document.getElementById("close-modal");
 btn_profile.addEventListener("click", (el) => {
   axios
   .get(
-    PATIENT_CONTROLER+"?fetch=profile",
+    PATIENT_CONTROLLER+"?fetch=profile",
     {
       headers: {
         Authorization: token,

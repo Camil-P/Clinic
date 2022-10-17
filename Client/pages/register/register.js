@@ -90,7 +90,7 @@ form.addEventListener(
     }
     res = await axios
       .post(
-        USER_CONTROLER,
+        USER_CONTROLLER,
         JSON.stringify(reqData),
         {
           headers: {

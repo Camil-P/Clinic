@@ -84,7 +84,7 @@ function createDynamicPatientTable(patientList) {
       cancelReq.addEventListener('click',()=> {
         console.log(patient.requests.Id)
         axios.delete(
-          ADMIN_CONTROLER +"?requestId="+patient.requests.Id,
+          ADMIN_CONTROLLER+"?requestId="+patient.requests.Id,
           {
             headers: {
               Authorization: token,
@@ -108,7 +108,7 @@ function createDynamicPatientTable(patientList) {
       submitReq.addEventListener('click',()=> {
         console.log(patient.requests.Id)
         axios.patch(
-          ADMIN_CONTROLER+"?requestId="+patient.requests.Id,null,
+          ADMIN_CONTROLLER+"?requestId="+patient.requests.Id,null,
           {
             headers: {
               Authorization: token,
@@ -147,7 +147,7 @@ form.addEventListener(
     }
     await axios
       .post(
-        ADMIN_CONTROLER,
+        ADMIN_CONTROLLER,
         JSON.stringify(reqData),
         {
           headers: {
@@ -174,7 +174,7 @@ form.addEventListener(
 const fetchDoctors = () => {
   axios
     .get(
-      ADMIN_CONTROLER+"?fetch=doctors",
+      ADMIN_CONTROLLER+"?fetch=doctors",
       {
         headers: {
           Authorization: token,
@@ -198,7 +198,7 @@ fetchDoctors();
 const fetchPatients = () => {
   axios
     .get(
-      ADMIN_CONTROLER+"?fetch=patients",
+      ADMIN_CONTROLLER+"?fetch=patients",
       {
         headers: {
           Authorization: token,

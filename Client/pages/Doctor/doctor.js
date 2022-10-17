@@ -131,7 +131,7 @@ const fetchPatients = () => {
 	console.log(token, "tu sma i ja");
 	axios
 	  .get(
-		DOCTOR_CONTROLER+"?fetch=patients",
+		DOCTOR_CONTROLLER+"?fetch=patients",
 		{
 		  headers: {
 			Authorization: token,
