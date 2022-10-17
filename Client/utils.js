@@ -1,63 +1,25 @@
 
-// const setCookie = (cookieName, value, maxAge) => {
-//   console.log(cookieName, value, maxAge);
-//   console.log(maxAge ? "max-age=" + maxAge : "");
-//   document.cookie = `${cookieName}=${value};${
-//     maxAge ? "max-age=" + maxAge : ""
-//   };path=/`;
-// };
-
-// const clearCookie = (cookieName) => {
-//     const expireDate = new Date();
-//     document.cookie = `${cookieName}="";expires=${
-//         expireDate.getSeconds() + 5
-//     };path=/`;
-
-//     console.log(expireDate)
-//   console.log(document.cookie)
-// };
 const getCookie = (cookieName) => {
   localStorage.getItem(cookieName);
-  // return document.cookie
-  //   .split(";")
-  //   .find((row) => row.includes(cookieName + "="))
-  //   ?.replace(cookieName+"=", "");
+
 };
 
 function setCookie(
   key,
   value,
-  expireSeconds
+  // expireSeconds
   ) {
     localStorage.setItem(key, value);
-
-
-  // var expireDate = new Date();
-  
-  // if (expireSeconds) {
-  //   expireDate.setSeconds(expireDate.getSeconds() + expireSeconds);
-  // }
-  // document.cookie =
-  //   key +
-  //   "=" +
-  //   value +
-  //   ";domain=" +
-  //   window.location.hostname +
-  //   ";path=/" +
-  //   ";expires=" +
-  //   expireDate.toUTCString();
   }
   
   function deleteCookie(name) {
     localStorage.removeItem(name);
-  setCookie(name, "", null, null, null, 1);
+  // setCookie(name, "", null, null, null, 1);
 }
 
 function get_cookie(name) {
   localStorage.getItem(name);
-  // return document.cookie.split(";").some((c) => {
-  //   return c.trim().startsWith(name + "=");
-  // });
+ 
 }
 
 
