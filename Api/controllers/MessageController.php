@@ -1,7 +1,6 @@
 <?php
 
 require_once("../config/Database.php");
-require_once("../models/Message.php");
 require_once("../models/Response.php");
 require_once("../config/Auth.php");
 
@@ -56,10 +55,26 @@ if (empty($_GET)) {
             }
 
             if ($authorizedUser['role'] === 'Patient') {
+
+                if (!isset($jsonData->doctorId) || !is_numeric($jsonData->doctorId) || is_string($jsonData->doctorId)){
+                    $response = new Response(false, 400);
+                    $response->addMessage("doctorId of the message is not valid.");
+                    $response->send();
+                    exit();
+                }
+
                 $jsonData = (array)$jsonData;
                 $jsonData['patientId'] = $authorizedUser['id'];
                 $jsonData = (object)$jsonData;
             } else {
+                
+                if (!isset($jsonData->doctorId) || !is_numeric($jsonData->patientId) || is_string($jsonData->patientId)){
+                    $response = new Response(false, 400);
+                    $response->addMessage("patientId of the message is not valid.");
+                    $response->send();
+                    exit();
+                }
+
                 $jsonData = (array)$jsonData;
                 $jsonData['doctorId'] = $authorizedUser['id'];
                 $jsonData = (object)$jsonData;
@@ -74,9 +89,6 @@ if (empty($_GET)) {
                                             :patientId,
                                             :doctorId,
                                             :content);");
-                                        //     $jsonData->patientId,
-                                        //     $jsonData->doctorId,
-                                        //    '$jsonData->content');");
             $query->bindParam(':patientId', $jsonData->patientId, PDO::PARAM_INT);
             $query->bindParam(':doctorId', $jsonData->doctorId, PDO::PARAM_INT);
             $query->bindParam(':content', $jsonData->content, PDO::PARAM_STR);
