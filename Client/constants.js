@@ -1,5 +1,5 @@
-const API_URL='https://traumatology-clinic.000webhostapp.com/controllers/';
-// const API_URL = "http://127.0.0.1:5500/localhost/";
+// const API_URL='https://traumatology-clinic.000webhostapp.com/controllers/';
+const API_URL = "http://localhost/Clinic/Api/controllers/";
 const ADMIN_CONTROLLER = API_URL + "AdminController.php";
 const PATIENT_CONTROLLER = API_URL + "PatientController.php";
 const MIGRATION = API_URL + "MigrationsController.php";
