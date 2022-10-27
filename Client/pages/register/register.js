@@ -90,7 +90,7 @@ form.addEventListener(
     }
     res = await axios
       .post(
-        "http://localhost/Clinic/Api/controllers/UserController.php",
+        USER_CONTROLLER,
         JSON.stringify(reqData),
         {
           headers: {

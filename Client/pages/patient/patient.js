@@ -9,7 +9,7 @@ let appointments = [];
 const fetchDoctors = () => {
   axios
     .get(
-      "http://localhost/Clinic/Api/controllers/PatientController.php?fetch=doctors",
+      PATIENT_CONTROLLER+"?fetch=doctors",
       {
         headers: {
           Authorization: token,
@@ -66,7 +66,7 @@ function createDoctorsList(listDoctors) {
 
 const fetchAppointments = () => {
   axios
-    .get("http://localhost/Clinic/Api/controllers/AppointmentController.php", {
+    .get(APPOINTMENT_URL, {
       headers: {
         Authorization: token,
       },
@@ -85,7 +85,7 @@ fetchAppointments();
 
 const requestChange = (id) => {
   axios
-  .post("http://localhost/Clinic/Api/controllers/PatientController.php", 
+  .post(PATIENT_CONTROLLER, 
   JSON.stringify({ requestedDoctorsId: id }),
   {
     headers: {
@@ -110,7 +110,7 @@ logoutBtn?.addEventListener("click", (el) => {
 
   deleteCookie("accessToken");
   deleteCookie("role");
-  window.location.href = "http://127.0.0.1:5500/Client/index.html";
+  window.location.href = "/";
 });
 
 const modalProfile = document.getElementsByClassName("modal-profile")[0];
@@ -120,7 +120,7 @@ const btnClose = document.getElementById("close-modal");
 btn_profile.addEventListener("click", (el) => {
   axios
   .get(
-    "http://localhost/Clinic/Api/controllers/PatientController.php?fetch=profile",
+    PATIENT_CONTROLLER+"?fetch=profile",
     {
       headers: {
         Authorization: token,
@@ -161,7 +161,7 @@ form.addEventListener(
 
   axios
       .post(
-        "http://localhost/Clinic/Api/controllers/AppointmentController.php",
+        APPOINTMENT_URL,
         JSON.stringify(reqData),
         {
           headers: {
@@ -223,7 +223,7 @@ const displayUpcomingAppointments = (appointments) => {
 
 const cancelAppointment = (id) => {
   axios.delete(
-    "http://localhost/Clinic/Api/controllers/AppointmentController.php?appointmentId="+id,
+    APPOINTMENT_URL+"?appointmentId="+id,
     {
       headers: {
         Authorization: token,

@@ -7,6 +7,7 @@
 
   if (!accessToken || accessToken === "") {
     if (currentHref !== origin+"/pages/login/login.html" &&
+        currentHref !== origin+"/index.html" &&
         currentHref !== origin+"/pages/register/register.html")
       window.location.href = origin+"/index.html";
   } else{

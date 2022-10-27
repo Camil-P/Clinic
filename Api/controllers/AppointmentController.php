@@ -268,7 +268,7 @@ elseif (empty($_GET)) {
                                             {$createAppointment->getStartingHour()},
                                             {$createAppointment->getPatientId()},
                                             {$createAppointment->getDoctorId()},
-                                            '{$createAppointment->getNote()}');");
+                                           '{$createAppointment->getNote()}');");
             $query->execute();
 
             $rowCount = $query->rowCount();
