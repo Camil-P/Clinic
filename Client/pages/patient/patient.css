@@ -223,16 +223,50 @@ color: greenyellow;
 .message-container{
   display: flex;
   width: 80%;
-  height: 500px;
+  height: 600px;
   margin: auto;
 }
 
 #messagedDoctors{
-  width: 30%;
-  border-right: 1px solid yellowgreen;
+  background-color: yellowgreen;
+  width: 20%;
+  border-right: 2px solid rgb(7, 171, 116);
+  overflow-y: scroll;
 }
 
 #displayedMessages{
-  width: 70%;
-  border-left: 1px solid yellowgreen;
+  background-color: yellowgreen;
+  width: 80%;
+  border-left: 2px solid rgb(7, 171, 116);
+  position: relative;
+}
+
+.chatPerson{
+  font-size: 28px;
+  color: white; 
+  text-align: center; 
+  padding: 20px; 
+  background-color: rgb(7, 171, 116);
+  border: 2px solid yellowgreen;
+  border-radius: 5px;
+}
+
+.chatInput{
+  font-size: 20px;
+  width: 90%;
+  height: 10%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+#sendMessageButton{
+  width: 10%;
+  height: 10%;
+  color: white;
+  font-size: 38px;
+  background-color: rgb(7, 171, 116);
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }

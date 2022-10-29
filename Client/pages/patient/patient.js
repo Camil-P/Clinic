@@ -239,3 +239,36 @@ const cancelAppointment = (id) => {
     alert(err);
   });
 }
+
+const data = [
+  {
+      "Id": 1,
+      "Content": "Sta radis?",
+      "PatientId": 2,
+      "DoctorId": 3
+  },
+  {
+      "Id": 3,
+      "Content": "Kad si stigo?",
+      "PatientId": 2,
+      "DoctorId": 3
+  },
+  {
+      "Id": 4,
+      "Content": "Juce...",
+      "PatientId": 2,
+      "DoctorId": 3
+  },
+  {
+      "Id": 5,
+      "Content": "A nisi mogo prekjuce.",
+      "PatientId": 2,
+      "DoctorId": 3
+  },
+  {
+      "Id": 6,
+      "Content": "Jelde?",
+      "PatientId": 2,
+      "DoctorId": 3
+  }
+]
