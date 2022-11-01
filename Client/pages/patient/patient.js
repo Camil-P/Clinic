@@ -4,7 +4,10 @@ const startingHourFormField = document.getElementById("startingHour");
 
 const token = getCookie("accessToken");
 
-let appointments = [];
+var appointments = [];
+var doctors = [];
+var selectedChatPerson = null;
+var messageData = {};
 
 const fetchDoctors = () => {
   axios
@@ -16,10 +19,13 @@ const fetchDoctors = () => {
     .then((res) => {
       const doctorsList = res.data.data;
       //sort by your selected doctor
-      const falseFirst = doctorsList.sort(
+      doctors = doctorsList.sort(
         (a, b) => Number(b.assigned) - Number(a.assigned)
       );
-      createDoctorsList(falseFirst);
+      createDoctorsList(doctors);
+
+      loadChatPersons();
+      changeSelectedChatPerson(doctors[0].id);
     })
     .catch((err) => {
       alert(err);
@@ -171,9 +177,9 @@ form.addEventListener(
         alert("Appointment created successfully.");
         window.location.reload();
       })
-      .catch((err) => {
-        console.log(err);
-        alert(err);
+      .catch(({ response }) => {
+        console.log(response.data.messages[0]);
+        alert(response.data.messages[0]);
       });
   },
   false
@@ -206,20 +212,17 @@ const displayStartingHours = (date) => {
 };
 
 const displayUpcomingAppointments = (appointments) => {
-  const upcomingAppointmentsContainer = document.getElementById(
-    "upcomingAppointments"
-  );
-  appointments
-    .filter((a) => new Date(a.date).getTime() >= new Date().getTime())
-    .forEach((a) => {
-      upcomingAppointmentsContainer.innerHTML += `
-    <div>
+  const upcomingAppointmentsContainer = document.getElementById("upcomingAppointments");
+  appointments.filter(a => a.patientsAppointment).forEach(a => {
+    upcomingAppointmentsContainer.innerHTML += `
+    <div style="background-color: greenyellow; width: 80%; border-radius: 5px">
       <h1>${a.serviceName}</h1>
-      <h1>${a.date} ${a.startingHour}h</h1>
-      <button onclick="cancelAppointment(${a.id})">cancel <br> appointment</button>
+      <h1>${a.date} - ${a.startingHour}h</h1>
+      ${new Date(a.date).getTime() >= new Date().getTime() ? 
+        `<button onclick="cancelAppointment(${a.id})">Cancel <br> appointment</button>` : ""}
     </div>`;
-    });
-};
+  });
+}
 
 const cancelAppointment = (id) => {
   axios
@@ -238,80 +241,97 @@ const cancelAppointment = (id) => {
     });
 };
 
-const messageData = {
-  senderId: 3,
-  messages: [
-    {
-      id: 1,
-      content: "Sta radis?",
-      sender: 2,
-      receiver: 3,
-    },
-    {
-      id: 3,
-      content: "Kad si stigo?",
-      sender: 2,
-      receiver: 3,
-    },
-    {
-      id: 4,
-      content: "Juce...",
-      sender: 2,
-      receiver: 3,
-    },
-    {
-      id: 5,
-      content: "A nisi mogo prekjuce.",
-      sender: 2,
-      receiver: 3,
-    },
-    {
-      id: 6,
-      content: "Jelde?",
-      sender: 2,
-      receiver: 3,
-    },
-    {
-      id: 7,
-      content: "nakon update-a?",
-      sender: 3,
-      receiver: 2,
-    },
-    {
-      id: 8,
-      content: "sad sad as dsa da",
-      sender: 2,
-      receiver: 3,
-    },
-    {
-      id: 9,
-      content: "ti dobljo",
-      sender: 2,
-      receiver: 3,
-    },
-    {
-      id: 10,
-      content: "psssss tuda",
-      sender: 2,
-      receiver: 3,
-    },
-    {
-      id: 11,
-      content: "?",
-      sender: 2,
-      receiver: 3,
-    },
-    {
-      id: 12,
-      content: "asds dsa",
-      sender: 2,
-      receiver: 3,
-    },
-    {
-      id: 13,
-      content: "dfsfsdfdsfd",
-      sender: 2,
-      receiver: 3,
-    },
-  ],
-};
+// MESSAGES LOGIC
+
+function loadChatPersons() {
+  const messagedPersonsContainer = document.getElementById("messagedPersons");
+  messagedPersonsContainer.innerHTML = "";
+
+  doctors.forEach(
+    (cp) =>
+      (messagedPersonsContainer.innerHTML += `<button id="p${
+        cp.id
+      }" onClick="changeSelectedChatPerson(${cp.id})" class="chatPerson">${
+        cp.name + " " + cp.surname
+      }</button>`)
+  );
+}
+
+function changeSelectedChatPerson(id) {
+  if (selectedChatPerson) {
+    document.getElementById("p" + selectedChatPerson).style[
+      "background-color"
+    ] = "rgb(7, 171, 116)";
+  }
+
+  selectedChatPerson = id;
+
+  document.getElementById("p" + selectedChatPerson).style["background-color"] =
+    "rgb(171, 7, 21)";
+
+  fetchMessages();
+}
+
+function fetchMessages() {
+  axios
+    .get(MESSAGE_CONTROLLER, {
+      headers: {
+        Authorization: token,
+      },
+    })
+    .then(({ data }) => {
+      messageData = data.data;
+      loadMessages();
+    })
+    .catch(({ response }) => {
+      console.log(response.data, "fetchAppointments");
+    });
+}
+
+function loadMessages() {
+  const messageContainer = document.getElementById("displayedMessages");
+  messageContainer.innerHTML = "";
+
+  messageData.messages
+    .filter(
+      (lm) =>
+        lm.receiver === selectedChatPerson || lm.sender === selectedChatPerson
+    )
+    .forEach((fm) => addMessage(messageContainer, fm.content, fm.receiver));
+
+  messageContainer.scrollTop = messageContainer.scrollHeight;
+}
+
+function addMessage(messageContainer, content, receiver) {
+  messageContainer.innerHTML +=
+    receiver === selectedChatPerson
+      ? `<h1 class="sentMessage">${content}</h1>`
+      : `<h1 class="receivedMessage">${content}</h1>`;
+}
+
+function sendMessage() {
+  const chatInputData = document.getElementById("chatInput");
+
+  axios
+    .post(
+      MESSAGE_CONTROLLER,
+      { receiver: selectedChatPerson, content: chatInputData.value },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      }
+    )
+    .then(({ data }) => {
+      const messageContainer = document.getElementById("displayedMessages");
+
+      console.log(data);
+      addMessage(messageContainer, data.data.content, data.data.receiver);
+      chatInputData.value = "";
+    })
+    .catch(({ response }) => {
+      console.log(response);
+      alert(response.data.messages[0]);
+    });
+}

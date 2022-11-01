@@ -228,9 +228,12 @@ switch ($_SERVER['REQUEST_METHOD']) {
                     exit();
                 }
             } else if ($fetch === 'patients') {
-                $query = $writeDB->prepare("SELECT *
-                                            FROM user
-                                            WHERE Role = 'Patient'");
+                $query = $writeDB->prepare("SELECT u.*, p.Id as PatientId 
+                                            FROM user u 
+                                            INNER JOIN patient p 
+                                                ON u.Id = p.UserId;");
+
+
                 $query->execute();
 
                 $rowCount = $query->rowCount();
@@ -260,10 +263,11 @@ switch ($_SERVER['REQUEST_METHOD']) {
                         $row['LoginAttempts']
                     );
                     $patientAsArray = $patient->asArray();
+                    $patientAsArray['patientId'] = $row['PatientId'];
 
                     $requestQuery = $writeDB->prepare("SELECT *
-                                                FROM assigndoctorrequest
-                                                WHERE PatientId = {$patientAsArray['id']}");
+                                                        FROM assigndoctorrequest
+                                                        WHERE PatientId = {$patientAsArray['id']}");
                     $requestQuery->execute();
 
                     $rowCount = $query->rowCount();

@@ -69,7 +69,8 @@ if (!array_key_exists('appointmentId', $_GET) && $_SERVER['REQUEST_METHOD'] === 
                                 FROM appointment
                                 WHERE 
                                     DoctorId = :doctorId
-                                    OR PatientId = :patientId;');
+                                    OR PatientId = :patientId
+                                ORDER BY Date DESC;');
 
         $query->bindParam(':doctorId', $doctorId, PDO::PARAM_INT);
         $query->bindParam(':patientId', $patientId, PDO::PARAM_INT);
@@ -240,6 +241,9 @@ elseif (empty($_GET)) {
                 $response->send();
                 exit();
             }
+
+            // echo json_encode((array)$jsonData);
+            // exit();
 
             if ($authorizedUser['role'] === 'Patient') {
                 $jsonData = (array)$jsonData;

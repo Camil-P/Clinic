@@ -47,9 +47,10 @@ if ($_SERVER['REQUEST_METHOD'] === "GET") {
         $fetch = $_GET['fetch'];
 
         if ($fetch === 'patients') {
-            $query = $writeDB->prepare("SELECT *
-                                    FROM user
-                                    WHERE Role = 'Patient'");
+            $query = $writeDB->prepare("SELECT u.*, p.Id as PatientId 
+                                        FROM user u 
+                                        INNER JOIN patient p 
+                                            ON u.Id = p.UserId;");
             $query->execute();
 
             $rowCount = $query->rowCount();
@@ -79,6 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === "GET") {
                     $row['LoginAttempts']
                 );
                 $patientAsArray = $patient->asArray();
+                $patientAsArray['patientId'] = $row['PatientId'];
                 $rowCount = $query->rowCount();
 
                 $patientsArray[] = $patientAsArray;

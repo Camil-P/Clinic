@@ -89,13 +89,16 @@
 }
 
 .modal-profile {
+  background-color: #24262b;
   position: fixed;
   width: 70%;
   height: 600px;
   border: 1px solid gainsboro;
+  border-radius: 5px;
   left: 330px;
   top: 100px;
   display: none;
+  z-index: 5;
 }
 
 .container-info {
@@ -110,6 +113,7 @@
   font-size: 30px;
   transition: 0.4s ease-in-out all;
   cursor: pointer;
+  border-radius: 5px;
 }
 #close-modal:hover {
   background-color: #bb0707;
@@ -218,6 +222,10 @@ color: greenyellow;
   color: white;
 }
 
+#createAppointment > select{
+	height: 40px;
+}
+
 /* MESSAGES */
 
 .message-container{
@@ -227,21 +235,15 @@ color: greenyellow;
   margin: auto;
 }
 
-#messagedDoctors{
+#messagedPersons{
   background-color: yellowgreen;
   width: 20%;
   border-right: 2px solid rgb(7, 171, 116);
   overflow-y: scroll;
 }
 
-#displayedMessages{
-  background-color: yellowgreen;
-  width: 80%;
-  border-left: 2px solid rgb(7, 171, 116);
-  position: relative;
-}
-
 .chatPerson{
+  width: 100%;
   font-size: 28px;
   color: white; 
   text-align: center; 
@@ -251,13 +253,48 @@ color: greenyellow;
   border-radius: 5px;
 }
 
-.chatInput{
+#chatSection{
+  height: 100%;
+  width: 80%;
+  background-color: yellowgreen;
+  border-left: 2px solid rgb(7, 171, 116);
+  position: relative;
+}
+
+#displayedMessages{
+  overflow-y: scroll;
+  height: 90%;
+}
+
+#displayedMessages > h1{
+  color: white;
+  padding: 20px;
+  background-color: rgb(7, 171, 116);
+  border-radius: 5px;
+  width: 40%;
+}
+
+.receivedMessage{
+  margin-left: 3%;
+  background-color: #24262b !important;
+}
+
+.sentMessage{
+  margin-left: 55%;
+}
+
+#chatInput{
   font-size: 20px;
   width: 90%;
   height: 10%;
   position: absolute;
   bottom: 0;
   left: 0;
+}
+
+#chatInput:active, #chatInput:focus{
+	border: none;
+	outline: none;
 }
 
 #sendMessageButton{
@@ -267,6 +304,11 @@ color: greenyellow;
   font-size: 38px;
   background-color: rgb(7, 171, 116);
   position: absolute;
+	border: none;
   bottom: 0;
   right: 0;
+}
+
+#sendMessageButton:hover{
+  cursor: pointer;
 }

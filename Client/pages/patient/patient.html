@@ -135,24 +135,20 @@
 
     <section id="messages">
       <div class="message-container">
-        <div id="messagedDoctors">
-          <div class="chatPerson">Dzelal Dupljak</div>
-          <div class="chatPerson">Dzelal Dupljak</div>
-          <div class="chatPerson">Dzelal Dupljak</div>
-          <div class="chatPerson">Dzelal Dupljak</div>
-          <div class="chatPerson">Dzelal Dupljak</div>
-          <div class="chatPerson">Dzelal Dupljak</div>
-          <div class="chatPerson">Dzelal Dupljak</div>
-          <div class="chatPerson">Dzelal Dupljak</div>
-          <div class="chatPerson">Dzelal Dupljak</div>
-          <div class="chatPerson">Dzelal Dupljak</div>
-          <div class="chatPerson">Dzelal Dupljak</div>
-          <div class="chatPerson">Dzelal Dupljak</div>
-        </div>
-        <div id="displayedMessages">
 
-          <input class="chatInput">
-          <button id="sendMessageButton">></button>
+        <div id="messagedPersons"></div>
+
+        <div id="chatSection">
+
+          <div id="displayedMessages"></div>
+
+          <div class="messageActions">
+            <input id="chatInput">
+            <button onclick="sendMessage()" id="sendMessageButton">
+              <i class="fa-sharp fa-solid fa-paper-plane"></i>
+            </button>
+          </div>
+
         </div>
       </div>
     </section>
