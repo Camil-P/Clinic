@@ -104,7 +104,7 @@ form.addEventListener(
       })
       .catch(({ response }) => {   
         console.log(response.data.messages[0]);
-        alert(response.data.messages[0]);
+        alert(response?.data?.messages[0] || 'Server returned unknown error, please try again!');
       });
   },
   false

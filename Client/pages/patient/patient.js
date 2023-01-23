@@ -133,16 +133,16 @@ btn_profile.addEventListener("click", (el) => {
     })
     .then(({ data }) => {
       modalProfile.style.display = "block";
-      document.getElementById("profileName").innerHTML = data.data.name;
-      document.getElementById("profileSurname").innerHTML = data.data.surname;
-      document.getElementById("profileEmail").innerHTML = data.data.email;
-      document.getElementById("profileBirthDate").innerHTML =
-        data.data.birthDate;
-      document.getElementById("profileBirthPlace").innerHTML =
-        data.data.birthPlace;
-      document.getElementById("profilePhoneNumber").innerHTML =
-        data.data.phoneNumber;
-      document.getElementById("profileGender").innerHTML = data.data.gender;
+      document.getElementById("profileName").innerHTML += " " + data.data.name;
+      document.getElementById("profileSurname").innerHTML += " " + data.data.surname;
+      document.getElementById("profileEmail").innerHTML += " " + data.data.email;
+      document.getElementById("profileBirthDate").innerHTML +=
+        " " + data.data.birthDate;
+      document.getElementById("profileBirthPlace").innerHTML +=
+        " " + data.data.birthPlace;
+      document.getElementById("profilePhoneNumber").innerHTML +=
+        " " + data.data.phoneNumber;
+      document.getElementById("profileGender").innerHTML += " " + data.data.gender;
     })
     .catch((err) => {
       alert(err.response.data.messages[0]);
@@ -292,13 +292,14 @@ function loadMessages() {
   const messageContainer = document.getElementById("displayedMessages");
   messageContainer.innerHTML = "";
 
-  messageData.messages
-    .filter(
-      (lm) =>
-        lm.receiver === selectedChatPerson || lm.sender === selectedChatPerson
-    )
-    .forEach((fm) => addMessage(messageContainer, fm.content, fm.receiver));
-
+  if (messageData.messages.length !== 0){
+      messageData.messages
+        .filter(
+          (lm) =>
+            lm.receiver === selectedChatPerson || lm.sender === selectedChatPerson
+        )
+        .forEach((fm) => addMessage(messageContainer, fm.content, fm.receiver));
+    }
   messageContainer.scrollTop = messageContainer.scrollHeight;
 }
 

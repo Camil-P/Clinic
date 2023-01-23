@@ -209,7 +209,7 @@ color: greenyellow;
   color: green;
 }
 #createAppointment select,input,textarea {
-  background-color: #24262b;
+  background-color: #00987;
   color: white;
 }
 
@@ -224,6 +224,11 @@ color: greenyellow;
 
 #createAppointment > select{
 	height: 40px;
+}
+
+#createAppointment select,input,textarea {
+background-color: rgb(7, 171, 116);
+color: white;
 }
 
 /* MESSAGES */

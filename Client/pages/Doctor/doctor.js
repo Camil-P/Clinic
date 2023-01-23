@@ -172,12 +172,12 @@ function createAppointmentTable(appointmentsRes) {
 		<tr>
 			<td>${e.date}</td>
 			<td>${e.serviceName}</td>
-			<td>${e.startingHour}</td>
-			<td>${e.completionStatus}</td>
-			<td>${e.id}</td>
+			<td>${e.startingHour} h</td>
+			<td>${e.note}</td>
+			<td>${e.name} ${e.surname}</td>
 			${
         new Date(e.date).getTime() >= new Date().getTime()
-          ? `<td class="cancel-app" onclick="DoctorcancelAppointment(${e.id})">Cancel</td>`
+          ? `<td class="cancel-app" onclick="doctorCancelAppointment(${e.id})">Cancel</td>`
           : ``
       }
 		</tr>
@@ -192,7 +192,6 @@ function loadCreateAppointmentsPatients() {
 
   patientList.forEach(
     (p) =>{
-	  console.log(p);
       (patientsSelect.innerHTML += `<option value="${p.patientId}">${p.name} ${p.surname}</option>`)}
   );
 }
@@ -286,12 +285,14 @@ function loadMessages() {
   const messageContainer = document.getElementById("displayedMessages");
   messageContainer.innerHTML = "";
 
-  messageData.messages
-    .filter(
-      (lm) =>
-        lm.receiver === selectedChatPerson || lm.sender === selectedChatPerson
-    )
-    .forEach((fm) => addMessage(messageContainer, fm.content, fm.receiver));
+  if (messageData.messages.length !== 0){
+      messageData.messages
+        .filter(
+          (lm) =>
+            lm.receiver === selectedChatPerson || lm.sender === selectedChatPerson
+        )
+        .forEach((fm) => addMessage(messageContainer, fm.content, fm.receiver));
+  }
 
   messageContainer.scrollTop = messageContainer.scrollHeight;
 }
