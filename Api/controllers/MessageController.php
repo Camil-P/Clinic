@@ -1,6 +1,7 @@
 <?php
 
 require_once("../config/Database.php");
+
 require_once("../models/Response.php");
 require_once("../config/Auth.php");
 
@@ -49,6 +50,7 @@ if (empty($_GET) && $_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($jsonData->content === "" || !isset($jsonData->content) || empty($jsonData->content)) {
             $response = new Response(false, 400);
             $response->addMessage("Content of the message is not valid.");
+
             $response->send();
             exit();
         }
